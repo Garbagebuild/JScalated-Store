@@ -1,0 +1,55 @@
+{
+  "id": "off-english-kaios4-v1",
+  "name": "OFF",
+  "short_name": "OFF",
+  "description": "OFF (English 3.0 fan translation) on EasyRPG Player for KaiOS 4.0: keypad controls, runs offline with a JavaScript engine (no WebAssembly), End-call exit.",
+  "lang": "en-US",
+  "start_url": "/index.html",
+  "scope": "/",
+  "display": "fullscreen",
+  "orientation": "natural",
+  "theme_color": "#000000",
+  "background_color": "#000000",
+  "categories": [
+    "games"
+  ],
+  "icons": [
+    {
+      "src": "icons/icon-56.png",
+      "sizes": "56x56",
+      "type": "image/png"
+    },
+    {
+      "src": "icons/icon-112.png",
+      "sizes": "112x112",
+      "type": "image/png"
+    },
+    {
+      "src": "icons/icon-128.png",
+      "sizes": "128x128",
+      "type": "image/png"
+    },
+    {
+      "src": "icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "b2g_features": {
+    "origin": "off-english-v1",
+    "version": "1.0.0",
+    "cursor": false,
+    "developer": {
+      "name": "Passion Project",
+      "url": "https://example.com"
+    },
+    "categories": [
+      "games"
+    ]
+  }
+}

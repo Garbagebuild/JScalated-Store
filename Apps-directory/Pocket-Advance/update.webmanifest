@@ -1,0 +1,22 @@
+{
+  "name": "Pocket Advance",
+  "version": "1.3.5",
+  "package_path": "https://github.com/Garbagebuild/JScalated-Store/releases/download/jscalated-apps-1/Pocket-Advance-1.3.5.zip",
+  "packaged_size": 684020,
+  "size": 684020,
+  "type": "web",
+  "b2g_features": {
+    "version": "1.3.5",
+    "type": "web",
+    "origin": "jscalated-pocket-advance",
+    "developer": {
+      "name": "JScalated Project",
+      "url": "https://jscalated.netlify.app"
+    },
+    "permissions": {
+      "device-storage:sdcard": {
+        "access": "readonly"
+      }
+    }
+  }
+}

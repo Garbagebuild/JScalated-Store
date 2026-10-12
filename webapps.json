@@ -1,0 +1,68 @@
+{
+  "schema": 1,
+  "categories": [
+    {
+      "id": "games",
+      "name": "Games"
+    },
+    {
+      "id": "emulators",
+      "name": "Emulators"
+    },
+    {
+      "id": "utilities",
+      "name": "Utilities"
+    },
+    {
+      "id": "other",
+      "name": "Other"
+    }
+  ],
+  "apps": [
+    {
+      "folder": "Baldis-Basics",
+      "name": "Baldi's Basics",
+      "version": "2.1.0",
+      "category": "games",
+      "description": "Baldi's Basics in Education and Learning (fan web build) as a KaiOS 4.0 packaged app: runs offline from the phone, game thread with OffscreenCanvas, engine converted to JavaScript (no WebAssembly), FPS counter, D-pad and keypad controls.",
+      "package_url": "https://github.com/Garbagebuild/JScalated-Store/releases/download/jscalated-apps-1/Baldis-Basics-2.1.0.zip",
+      "sha256": "c32617c462d03db3148bb10b7a5e1c3c4126943c754c1e9484fd5744d94d6a9f"
+    },
+    {
+      "folder": "JScalated-Store",
+      "name": "JScalated Store",
+      "version": "1.2.0",
+      "category": "utilities",
+      "description": "Browse and install JScalated KaiOS 3 apps.",
+      "package_url": "https://github.com/Garbagebuild/JScalated-Store/releases/download/jscalated-apps-1/JScalated-Store-1.2.0.zip",
+      "sha256": "cd04c24128e3f87b35339524c43708de1266dcb6c3a42d583c5ae45fd0707fe5"
+    },
+    {
+      "folder": "OFF",
+      "name": "OFF",
+      "version": "1.0.0",
+      "category": "games",
+      "description": "OFF (English 3.0 fan translation) on EasyRPG Player for KaiOS 4.0: keypad controls, runs offline with a JavaScript engine (no WebAssembly), End-call exit.",
+      "package_url": "https://github.com/Garbagebuild/JScalated-Store/releases/download/jscalated-apps-1/OFF-1.0.0.zip",
+      "sha256": "4e2e5101e1a1b21dd9e22d89f200c09932fcb4264dcfcbfe39c91bdc7842c98b"
+    },
+    {
+      "folder": "Pocket-Advance",
+      "name": "Pocket Advance",
+      "version": "1.3.5",
+      "category": "emulators",
+      "description": "A lightweight Game Boy Advance emulator for KaiOS feature phones.",
+      "package_url": "https://github.com/Garbagebuild/JScalated-Store/releases/download/jscalated-apps-1/Pocket-Advance-1.3.5.zip",
+      "sha256": "18085a50056390d87e753328360b660df13063f602311c5960a5935d1efb0255"
+    },
+    {
+      "folder": "Shattered-Pixel-Dungeon",
+      "name": "Shattered Pixel Dungeon",
+      "version": "1.1.0",
+      "category": "games",
+      "description": "Shattered Pixel Dungeon 4.0.2 (open source, GPLv3) as a KaiOS 4.0 packaged app: Java compiled to JavaScript, no WebAssembly, keypad controls, runs offline.",
+      "package_url": "https://github.com/Garbagebuild/JScalated-Store/releases/download/jscalated-apps-1/Shattered-Pixel-Dungeon-1.1.0.zip",
+      "sha256": "8b411520ee7b1c758ce6310c6bd601dba61240076710fd1eb77aab5bc18cfccc"
+    }
+  ]
+}

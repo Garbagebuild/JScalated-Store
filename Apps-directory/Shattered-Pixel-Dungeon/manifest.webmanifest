@@ -1,0 +1,58 @@
+{
+  "name": "Shattered Pixel Dungeon",
+  "short_name": "Shattered PD",
+  "id": "shattered-pixel-dungeon-kaios4",
+  "description": "Shattered Pixel Dungeon 4.0.2 (open source, GPLv3) as a KaiOS 4.0 packaged app: Java compiled to JavaScript, no WebAssembly, keypad controls, runs offline.",
+  "lang": "en-US",
+  "dir": "ltr",
+  "start_url": "/index.html",
+  "scope": "/",
+  "display": "fullscreen",
+  "orientation": "natural",
+  "theme_color": "#2b3a24",
+  "background_color": "#000000",
+  "categories": [
+    "games"
+  ],
+  "icons": [
+    {
+      "src": "/icons/icon-56.png",
+      "sizes": "56x56",
+      "type": "image/png"
+    },
+    {
+      "src": "/icons/icon-112.png",
+      "sizes": "112x112",
+      "type": "image/png"
+    },
+    {
+      "src": "/icons/icon-128.png",
+      "sizes": "128x128",
+      "type": "image/png"
+    },
+    {
+      "src": "/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "b2g_features": {
+    "version": "1.1.0",
+    "developer": {
+      "name": "Passion Project (port); Evan Debenham (game)",
+      "url": "https://github.com/00-Evan/shattered-pixel-dungeon"
+    },
+    "core": false,
+    "cursor": false,
+    "origin": "shattered-pixel-dungeon",
+    "permissions": {},
+    "categories": [
+      "games"
+    ]
+  }
+}

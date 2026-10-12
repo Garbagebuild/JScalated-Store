@@ -1,0 +1,20 @@
+{
+  "name": "OFF",
+  "version": "1.0.0",
+  "package_path": "https://github.com/Garbagebuild/JScalated-Store/releases/download/jscalated-apps-1/OFF-1.0.0.zip",
+  "packaged_size": 103277965,
+  "size": 103277965,
+  "type": "web",
+  "b2g_features": {
+    "origin": "off-english-v1",
+    "version": "1.0.0",
+    "cursor": false,
+    "developer": {
+      "name": "Passion Project",
+      "url": "https://example.com"
+    },
+    "categories": [
+      "games"
+    ]
+  }
+}

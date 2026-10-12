@@ -1,0 +1,38 @@
+{
+  "lang": "en-US",
+  "name": "JScalated Store",
+  "id": "jscalated-store",
+  "short_name": "JScalated Store",
+  "description": "Browse and install JScalated KaiOS 3 apps.",
+  "start_url": "/index.html",
+  "launch_path": "/index.html",
+  "display": "standalone",
+  "theme_color": "#07111f",
+  "background_color": "#07111f",
+  "orientation": "natural",
+  "icons": [
+    {
+      "src": "/icons/store-56.png",
+      "type": "image/png",
+      "sizes": "56x56"
+    },
+    {
+      "src": "/icons/store-112.png",
+      "type": "image/png",
+      "sizes": "112x112"
+    }
+  ],
+  "b2g_features": {
+    "version": "1.2.0",
+    "type": "web",
+    "core": true,
+    "origin": "jscalated-store",
+    "developer": {
+      "name": "JScalated",
+      "url": "https://purple-moon-6471.samjoe2010-s.workers.dev/"
+    },
+    "chrome": {
+      "statusbar": "overlap"
+    }
+  }
+}

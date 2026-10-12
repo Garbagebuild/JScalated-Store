@@ -1,0 +1,39 @@
+{
+  "id": "pocket-advance",
+  "name": "Pocket Advance",
+  "short_name": "Pocket GBA",
+  "description": "A lightweight Game Boy Advance emulator for KaiOS feature phones.",
+  "lang": "en-US",
+  "start_url": "/index.html",
+  "scope": "/",
+  "display": "fullscreen",
+  "orientation": "portrait",
+  "background_color": "#08111f",
+  "theme_color": "#0f766e",
+  "icons": [
+    {
+      "src": "/icons/icon-56.png",
+      "sizes": "56x56",
+      "type": "image/png"
+    },
+    {
+      "src": "/icons/icon-112.png",
+      "sizes": "112x112",
+      "type": "image/png"
+    }
+  ],
+  "b2g_features": {
+    "version": "1.3.5",
+    "type": "web",
+    "origin": "jscalated-pocket-advance",
+    "developer": {
+      "name": "JScalated Project",
+      "url": "https://jscalated.netlify.app"
+    },
+    "permissions": {
+      "device-storage:sdcard": {
+        "access": "readonly"
+      }
+    }
+  }
+}
