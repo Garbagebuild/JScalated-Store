@@ -23,9 +23,12 @@
     }
   ],
   "b2g_features": {
-    "version": "1.2.0",
+    "version": "1.2.1",
     "type": "web",
     "core": true,
+    "permissions": {
+      "webapps-manage": {}
+    },
     "origin": "jscalated-store",
     "developer": {
       "name": "JScalated",
