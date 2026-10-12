@@ -31,11 +31,11 @@
     {
       "folder": "JScalated-Store",
       "name": "JScalated Store",
-      "version": "1.2.0",
+      "version": "1.2.1",
       "category": "utilities",
       "description": "Browse and install JScalated KaiOS 3 apps.",
-      "package_url": "https://github.com/Garbagebuild/JScalated-Store/releases/download/jscalated-apps-1/JScalated-Store-1.2.0.zip",
-      "sha256": "cd04c24128e3f87b35339524c43708de1266dcb6c3a42d583c5ae45fd0707fe5"
+      "package_url": "https://github.com/Garbagebuild/JScalated-Store/releases/download/jscalated-apps-1/JScalated-Store-1.2.1.zip",
+      "sha256": "5aaa0e4c36190967152bbfafb63f9fbfce10480d10dc7abeef659d4fe790a1b2"
     },
     {
       "folder": "OFF",
