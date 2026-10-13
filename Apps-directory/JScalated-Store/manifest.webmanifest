@@ -23,7 +23,7 @@
     }
   ],
   "b2g_features": {
-    "version": "1.2.3",
+    "version": "1.2.1",
     "type": "web",
     "core": true,
     "permissions": {
