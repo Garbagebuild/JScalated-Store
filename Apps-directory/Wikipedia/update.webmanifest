@@ -1,0 +1,15 @@
+{
+  "name": "Wikipedia",
+  "version": "0.0.2",
+  "package_path": "https://github.com/Garbagebuild/JScalated-Store/releases/download/jscalated-apps-1/Wikipedia-0.0.2.zip",
+  "packaged_size": 1003087,
+  "size": 1003087,
+  "type": "web",
+  "b2g_features": {
+    "permissions": {
+      "systemXHR": {}
+    },
+    "version": "0.0.2",
+    "origin": "wikipedia"
+  }
+}

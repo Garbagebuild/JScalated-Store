@@ -1,0 +1,32 @@
+{
+  "name": "Wikipedia",
+  "short_name": "Wikipedia",
+  "start_url": "/index.html",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "lang": "en-US",
+  "scope": "/",
+  "id": "wikipedia",
+  "description": "With the free Wikipedia app, search and explore information from all over the world in 300+ languages.",
+  "theme_color": "#FFFFFF",
+  "orientation": "natural",
+  "icons": [
+    {
+      "src": "/images/56px.png",
+      "type": "image/png",
+      "sizes": "56x56"
+    },
+    {
+      "src": "/images/112px.png",
+      "type": "image/png",
+      "sizes": "112x112"
+    }
+  ],
+  "b2g_features": {
+    "permissions": {
+      "systemXHR": {}
+    },
+    "version": "0.0.2",
+    "origin": "wikipedia"
+  }
+}
