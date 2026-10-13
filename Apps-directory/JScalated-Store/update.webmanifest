@@ -1,12 +1,12 @@
 {
   "name": "JScalated Store",
-  "version": "1.2.1",
-  "package_path": "https://github.com/Garbagebuild/JScalated-Store/releases/download/jscalated-apps-1/JScalated-Store-1.2.1.zip",
+  "version": "1.2.2",
+  "package_path": "https://github.com/Garbagebuild/JScalated-Store/releases/download/jscalated-apps-1/JScalated-Store-1.2.2.zip",
   "packaged_size": 14895,
   "size": 14895,
   "type": "web",
   "b2g_features": {
-    "version": "1.2.1",
+    "version": "1.2.2",
     "type": "web",
     "core": true,
     "permissions": {
