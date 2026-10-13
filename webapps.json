@@ -14,6 +14,10 @@
       "name": "Utilities"
     },
     {
+      "id": "reference",
+      "name": "Reference"
+    },
+    {
       "id": "other",
       "name": "Other"
     }
@@ -63,6 +67,15 @@
       "description": "Shattered Pixel Dungeon 4.0.2 (open source, GPLv3) as a KaiOS 4.0 packaged app: Java compiled to JavaScript, no WebAssembly, keypad controls, runs offline.",
       "package_url": "https://github.com/Garbagebuild/JScalated-Store/releases/download/jscalated-apps-1/Shattered-Pixel-Dungeon-1.1.0.zip",
       "sha256": "8b411520ee7b1c758ce6310c6bd601dba61240076710fd1eb77aab5bc18cfccc"
+    },
+    {
+      "folder": "Wikipedia",
+      "name": "Wikipedia",
+      "version": "0.0.2",
+      "category": "reference",
+      "description": "Wikipedia search and reading for KaiOS 3, built from the Wikimedia MIT-licensed app and gogogoghost port.",
+      "package_url": "https://github.com/Garbagebuild/JScalated-Store/releases/download/jscalated-apps-1/Wikipedia-0.0.2.zip",
+      "sha256": "0257f00c2a0dbb54b99cc8389134e6dd90a62c0c6269664c475a0655386f99d0"
     }
   ]
 }
