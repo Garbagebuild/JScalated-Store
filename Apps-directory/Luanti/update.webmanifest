@@ -1,0 +1,21 @@
+{
+  "name": "Luanti",
+  "version": "0.12.0",
+  "package_path": "https://github.com/Garbagebuild/JScalated-Store/releases/download/jscalated-apps-1/Luanti-0.12.0.zip",
+  "packaged_size": 17080842,
+  "size": 17080842,
+  "type": "privileged",
+  "b2g_features": {
+    "developer": {
+      "name": "Passion Project"
+    },
+    "core": false,
+    "type": "privileged",
+    "permissions": {
+      "tcp-socket": {}
+    },
+    "version": "0.12.0",
+    "origin": "luanti-kaios4",
+    "cursor": false
+  }
+}
