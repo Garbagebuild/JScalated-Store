@@ -1,0 +1,17 @@
+{
+  "name": "Nitro Racing",
+  "version": "0.6.0",
+  "package_path": "https://github.com/Garbagebuild/JScalated-Store/releases/download/jscalated-apps-1/Nitro-Racing-0.6.0.zip",
+  "packaged_size": 3847012,
+  "size": 3847012,
+  "type": "web",
+  "b2g_features": {
+    "developer": {
+      "name": "Passion Project"
+    },
+    "core": false,
+    "version": "0.6.0",
+    "origin": "scratch-nitro-racing",
+    "cursor": false
+  }
+}
