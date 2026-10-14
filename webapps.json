@@ -42,6 +42,24 @@
       "sha256": "a31d755c0e8c65f2ed4d8d27acd650946960e4774a49f9a5590014c53556cbb1"
     },
     {
+      "folder": "Luanti",
+      "name": "Luanti",
+      "version": "0.12.0",
+      "category": "games",
+      "description": "Luanti voxel game for KaiOS 4.0 with Minetest Game; uses threads, OffscreenCanvas, and WebGL.",
+      "package_url": "https://github.com/Garbagebuild/JScalated-Store/releases/download/jscalated-apps-1/Luanti-0.12.0.zip",
+      "sha256": "319d1cb4a09e23b87a95381cf009b1f688ff389d81ccc5fd5d6e163f530715c7"
+    },
+    {
+      "folder": "Nitro-Racing",
+      "name": "Nitro Racing",
+      "version": "0.6.0",
+      "category": "games",
+      "description": "Runs a Scratch project offline on KaiOS with the TurboWarp engine; keypad-driven mouse.",
+      "package_url": "https://github.com/Garbagebuild/JScalated-Store/releases/download/jscalated-apps-1/Nitro-Racing-0.6.0.zip",
+      "sha256": "e918d16143a6d7cb324363fc81c8b4c21e9ee55d95f8101c067981e89636244f"
+    },
+    {
       "folder": "OFF",
       "name": "OFF",
       "version": "1.0.0",
@@ -67,6 +85,15 @@
       "description": "Shattered Pixel Dungeon 4.0.2 (open source, GPLv3) as a KaiOS 4.0 packaged app: Java compiled to JavaScript, no WebAssembly, keypad controls, runs offline.",
       "package_url": "https://github.com/Garbagebuild/JScalated-Store/releases/download/jscalated-apps-1/Shattered-Pixel-Dungeon-1.1.0.zip",
       "sha256": "8b411520ee7b1c758ce6310c6bd601dba61240076710fd1eb77aab5bc18cfccc"
+    },
+    {
+      "folder": "Super-Scratch-Smash",
+      "name": "Super Scratch Smash",
+      "version": "0.6.0",
+      "category": "games",
+      "description": "Runs a Scratch project offline on KaiOS with the TurboWarp engine; keypad-driven mouse.",
+      "package_url": "https://github.com/Garbagebuild/JScalated-Store/releases/download/jscalated-apps-1/Super-Scratch-Smash-0.6.0.zip",
+      "sha256": "d22ef6ce3b7a172b1da89177f5b16a4104c0fefcb424caee7470bb1cd02a80db"
     },
     {
       "folder": "Wikipedia",
