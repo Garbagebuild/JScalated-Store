@@ -1,0 +1,47 @@
+{
+  "name": "Super Scratch Smash",
+  "short_name": "Super Scratch Smash",
+  "id": "scratch-super-scratch-smash",
+  "version": "0.6.0",
+  "description": "Runs a Scratch project offline on KaiOS with the TurboWarp engine; keypad-driven mouse.",
+  "lang": "en-US",
+  "start_url": "/index.html",
+  "display": "fullscreen",
+  "orientation": "portrait",
+  "theme_color": "#000000",
+  "background_color": "#000000",
+  "icons": [
+    {
+      "src": "/icons/icon-56.png",
+      "sizes": "56x56",
+      "type": "image/png"
+    },
+    {
+      "src": "/icons/icon-112.png",
+      "sizes": "112x112",
+      "type": "image/png"
+    },
+    {
+      "src": "/icons/icon-128.png",
+      "sizes": "128x128",
+      "type": "image/png"
+    },
+    {
+      "src": "/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    }
+  ],
+  "b2g_features": {
+    "developer": {
+      "name": "Passion Project"
+    },
+    "core": false,
+    "version": "0.6.0",
+    "origin": "scratch-super-scratch-smash",
+    "cursor": false
+  },
+  "categories": [
+    "games"
+  ]
+}
