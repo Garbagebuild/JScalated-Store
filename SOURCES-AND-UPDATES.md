@@ -49,3 +49,18 @@ Store. It does not uninstall its apps.
 The packages prepared in this project pass the tested KaiOS package verifier,
 but their CMS signatures are not cryptographically valid. Phone acceptance and
 individual app compatibility require device testing.
+
+## OStore handoff
+
+The catalogue now lists OStore 1.2.6 in place of the older JScalated Store app.
+Its update source is
+`https://garbagebuild.github.io/JScalated-Store/Apps-directory/OStore/update.webmanifest`.
+The JScalated Store update manifest remains in this repository for phones that
+already installed that app. Removing its catalogue entry does not uninstall it.
+
+OStore uses its recorded update URL to check for its own updates. A fresh install
+through the GitHub Pages update manifest will check this HTTPS source on later
+launches. An OStore installation originally made from a LAN update URL may
+continue checking that old URL; migration of that installed record has not
+been verified on a handset. The OStore ZIP here contains copied CMS signature
+metadata from the Python fixture tool, not a genuine cryptographic signature.

@@ -33,15 +33,6 @@
       "sha256": "c32617c462d03db3148bb10b7a5e1c3c4126943c754c1e9484fd5744d94d6a9f"
     },
     {
-      "folder": "JScalated-Store",
-      "name": "JScalated Store",
-      "version": "1.2.4",
-      "category": "utilities",
-      "description": "Browse and install JScalated KaiOS 3 apps.",
-      "package_url": "https://github.com/Garbagebuild/JScalated-Store/releases/download/jscalated-apps-1/JScalated-Store-1.2.4.zip",
-      "sha256": "a31d755c0e8c65f2ed4d8d27acd650946960e4774a49f9a5590014c53556cbb1"
-    },
-    {
       "folder": "Luanti",
       "name": "Luanti",
       "version": "0.12.0",
@@ -103,6 +94,15 @@
       "description": "Wikipedia search and reading for KaiOS 3, built from the Wikimedia MIT-licensed app and gogogoghost port.",
       "package_url": "https://github.com/Garbagebuild/JScalated-Store/releases/download/jscalated-apps-1/Wikipedia-0.0.2.zip",
       "sha256": "0257f00c2a0dbb54b99cc8389134e6dd90a62c0c6269664c475a0655386f99d0"
+    },
+    {
+      "folder": "OStore",
+      "name": "OStore",
+      "version": "1.2.6",
+      "category": "utilities",
+      "description": "Browse and install KaiOS apps from the JScalated GitHub catalogue and OStore API.",
+      "package_url": "https://garbagebuild.github.io/JScalated-Store/Apps-directory/OStore/application.zip",
+      "sha256": "32e7afbf8aa92386852cabb5a737143d9df6e782fbb61476012dba89a263e815"
     }
   ]
 }

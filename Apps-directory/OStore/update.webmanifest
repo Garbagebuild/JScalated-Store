@@ -1,0 +1,22 @@
+{
+  "name": "OStore",
+  "version": "1.2.6",
+  "package_path": "https://garbagebuild.github.io/JScalated-Store/Apps-directory/OStore/application.zip",
+  "packaged_size": 77719,
+  "size": 77719,
+  "type": "web",
+  "b2g_features": {
+    "type": "web",
+    "core": true,
+    "permissions": {
+      "device-storage:sdcard": {
+        "access": "readwrite"
+      },
+      "systemXHR": {},
+      "webapps-manage": {},
+      "sideload": {}
+    },
+    "version": "1.2.6",
+    "origin": "ostore"
+  }
+}
