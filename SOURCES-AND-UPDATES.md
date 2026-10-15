@@ -53,6 +53,8 @@ individual app compatibility require device testing.
 ## OStore handoff
 
 The catalogue now lists OStore 1.2.6 in place of the older JScalated Store app.
+The [GitHub Pages installer](https://garbagebuild.github.io/JScalated-Store/)
+stages the OStore AppsManager helper directly on the phone.
 Its update source is
 `https://garbagebuild.github.io/JScalated-Store/Apps-directory/OStore/update.webmanifest`.
 The JScalated Store update manifest remains in this repository for phones that

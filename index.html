@@ -1,1 +1,79 @@
-<!doctype html><html lang="en"><meta charset="utf-8"><title>JScalated app catalogue</title><h1>JScalated app catalogue</h1><p><a href="webapps.json">View webapps.json</a></p></html>
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Install OStore for KaiOS 3</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#07111f;color:#e2e8f0;font:15px Arial,sans-serif}
+main{max-width:620px;margin:auto;padding:18px}h1{color:#38bdf8;font-size:28px}h2{font-size:19px}
+.panel{background:#0b1728;border:1px solid #20324a;border-radius:11px;padding:16px;margin:14px 0}
+p,li{line-height:1.45}button{width:100%;padding:13px;border:0;border-radius:7px;background:#22c55e;color:#020617;font-weight:bold;font-size:16px}
+button:disabled{opacity:.55}code,pre{display:block;white-space:pre-wrap;word-break:break-word;padding:10px;background:#020617;color:#22c55e;border-radius:6px}
+a{color:#7dd3fc}.warn{color:#fca5a5}
+</style>
+</head>
+<body>
+<main>
+  <h1>Install OStore</h1>
+  <p>OStore 1.2.6 is hosted on this GitHub Pages site for KaiOS 3.</p>
+  <section class="panel">
+    <h2>On your phone</h2>
+    <p>Open this page in the phone browser and select the button below. It stages the installer and opens the System page.</p>
+    <button id="stage" type="button">Stage OStore installer</button>
+    <pre id="status" role="status" aria-live="polite">Ready.</pre>
+    <p>On the blank System page, enter these address-bar commands in order in the same tab:</p>
+    <code>javascript:document.createElement('script')</code>
+    <code>javascript:document.write(name)</code>
+  </section>
+  <section class="panel">
+    <h2>GitHub package</h2>
+    <p><a href="Apps-directory/OStore/update.webmanifest">OStore update manifest</a> · <a href="Apps-directory/OStore/application.zip">Download application.zip</a> · <a href="webapps.json">App catalogue</a></p>
+    <p class="warn">The ZIP contains copied signature metadata from a test fixture, not a valid new cryptographic signature. Device acceptance has not been verified for this release.</p>
+    <p>If OStore was installed from the earlier LAN test page, the phone may retain that update URL. A one-time migration may be needed if the new source is rejected.</p>
+  </section>
+</main>
+<script>
+(function () {
+  "use strict";
+  var button = document.getElementById("stage");
+  var status = document.getElementById("status");
+  function get(path, done) {
+    var request = new XMLHttpRequest();
+    request.open("GET", new URL(path, location.href).href + "?v=1.2.6", true);
+    request.onload = function () {
+      if (request.status < 200 || request.status >= 300 || !request.responseText) {
+        done(new Error("Could not load " + path + ": HTTP " + request.status));
+      } else { done(null, request.responseText); }
+    };
+    request.onerror = function () { done(new Error("Could not load " + path)); };
+    request.send();
+  }
+  button.onclick = function () {
+    button.disabled = true;
+    status.textContent = "Loading GitHub installer scripts…";
+    get("appsmanager.js", function (error, client) {
+      if (error) { status.textContent = error.message; button.disabled = false; return; }
+      get("ostore-installer.js", function (installerError, installer) {
+        if (installerError) { status.textContent = installerError.message; button.disabled = false; return; }
+        var payload = client + "\n" + installer;
+        if (payload.toLowerCase().indexOf("</scr" + "ipt") !== -1) {
+          status.textContent = "Installer script cannot be staged safely.";
+          button.disabled = false;
+          return;
+        }
+        window.name = "<script>" + payload + "<" + "/script>";
+        if (window.name.length !== payload.length + 17) {
+          status.textContent = "The phone did not retain the full installer.";
+          button.disabled = false;
+          return;
+        }
+        status.textContent = "Installer staged. Opening the System page…";
+        location.href = "http://system.localhost/proxy.html";
+      });
+    });
+  };
+}());
+</script>
+</body>
+</html>
