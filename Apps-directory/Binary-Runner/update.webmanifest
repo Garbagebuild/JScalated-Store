@@ -1,12 +1,12 @@
 {
   "name": "Binary Runner",
-  "version": "1.0.0",
-  "package_path": "https://github.com/Garbagebuild/JScalated-Store/releases/download/jscalated-apps-1/Binary-Runner-1.0.0.zip",
-  "packaged_size": 141128,
-  "size": 141128,
+  "version": "1.0.1",
+  "package_path": "https://github.com/Garbagebuild/JScalated-Store/releases/download/jscalated-apps-1/Binary-Runner-1.0.1.zip",
+  "packaged_size": 136551,
+  "size": 136551,
   "type": "web",
   "b2g_features": {
-    "version": "1.0.0",
+    "version": "1.0.1",
     "type": "web",
     "core": true,
     "origin": "jscalated-binary-runner",
