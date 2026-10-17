@@ -33,6 +33,15 @@
       "sha256": "c32617c462d03db3148bb10b7a5e1c3c4126943c754c1e9484fd5744d94d6a9f"
     },
     {
+      "folder": "Binary-Runner",
+      "name": "Binary Runner",
+      "version": "1.0.0",
+      "category": "utilities",
+      "description": "Stage a bundled binary or script as the KaiOS updater daemon with backup, verification, and reboot prompts.",
+      "package_url": "https://garbagebuild.github.io/JScalated-Store/Apps-directory/Binary-Runner/application.zip",
+      "sha256": "c1773206c9e164bf5fbeee75c08b3ae8d19d10c2a335092a7455535759acbf36"
+    },
+    {
       "folder": "Luanti",
       "name": "Luanti",
       "version": "0.12.0",
