@@ -1,0 +1,21 @@
+{
+  "manifest_version": 2,
+  "name": "JScalated Binary Runner Installer",
+  "version": "1.0.3",
+  "applications": {
+    "gecko": {
+      "id": "jscalated-binary-runner@local"
+    }
+  },
+  "experiment_apis": {
+    "binaryRunnerInstaller": {
+      "schema": "schema.json",
+      "parent": {
+        "events": ["startup"],
+        "scopes": ["addon_parent"],
+        "paths": [["binaryRunnerInstaller"]],
+        "script": "api.js"
+      }
+    }
+  }
+}

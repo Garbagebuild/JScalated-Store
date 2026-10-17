@@ -4,7 +4,7 @@
   "short_name": "BinaryRunner",
   "description": "Stage a bundled binary as the KaiOS updater daemon with backup and verification.",
   "id": "jscalated-binary-runner",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "categories": [
     "utilities"
   ],
@@ -22,7 +22,7 @@
     }
   ],
   "b2g_features": {
-    "version": "1.0.2",
+    "version": "1.0.3",
     "type": "web",
     "core": true,
     "origin": "jscalated-binary-runner",

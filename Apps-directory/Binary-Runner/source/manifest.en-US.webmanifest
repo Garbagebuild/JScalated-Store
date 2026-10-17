@@ -1,0 +1,6 @@
+{
+  "id": "jscalated-binary-runner",
+  "name": "Binary Runner",
+  "short_name": "BinaryRunner",
+  "description": "Stage a bundled binary as the KaiOS updater daemon with backup and verification."
+}
