@@ -39,8 +39,8 @@
       "version": "1.0.1",
       "category": "utilities",
       "description": "Stage a bundled binary or script as the KaiOS updater daemon with backup, verification, and reboot prompts.",
-      "package_url": "https://github.com/Garbagebuild/JScalated-Store/releases/download/jscalated-apps-1/Binary-Runner-1.0.1.zip",
-      "sha256": "c616bd5e1c6cbcbffd85c3e959ac8d7f545b2281748e4b3c81e17fc2a67e9412"
+      "package_url": "https://github.com/Garbagebuild/JScalated-Store/releases/download/jscalated-apps-1/Binary-Runner-1.0.1-repacked.zip",
+      "sha256": "693f9fc8298cd7cefbf925995d12a647c2cea9ee69b66c06d8aa53f5017dcc41"
     },
     {
       "folder": "JScalated-Store",
