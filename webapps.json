@@ -42,6 +42,15 @@
       "sha256": "c1773206c9e164bf5fbeee75c08b3ae8d19d10c2a335092a7455535759acbf36"
     },
     {
+      "folder": "JScalated-Store",
+      "name": "JScalated Store",
+      "version": "1.2.4",
+      "category": "utilities",
+      "description": "Browse and install JScalated KaiOS 3 apps.",
+      "package_url": "https://github.com/Garbagebuild/JScalated-Store/releases/download/jscalated-apps-1/JScalated-Store-1.2.4.zip",
+      "sha256": "a31d755c0e8c65f2ed4d8d27acd650946960e4774a49f9a5590014c53556cbb1"
+    },
+    {
       "folder": "Luanti",
       "name": "Luanti",
       "version": "0.12.0",
