@@ -1,0 +1,23 @@
+{
+  "name": "Binary Runner",
+  "version": "1.0.0",
+  "package_path": "https://garbagebuild.github.io/JScalated-Store/Apps-directory/Binary-Runner/application.zip",
+  "packaged_size": 141130,
+  "size": 141130,
+  "type": "web",
+  "b2g_features": {
+    "version": "1.0",
+    "type": "web",
+    "core": true,
+    "origin": "jscalated-binary-runner",
+    "permissions": {
+      "device-storage:apps": {
+        "access": "readwrite"
+      },
+      "webapps-manage": {}
+    },
+    "developer": {
+      "name": "JScalated"
+    }
+  }
+}

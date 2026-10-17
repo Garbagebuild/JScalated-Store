@@ -1,0 +1,39 @@
+{
+  "lang": "en-US",
+  "name": "Binary Runner",
+  "short_name": "BinaryRunner",
+  "description": "Stage a bundled binary or script as the KaiOS updater daemon with backup, verification, and reboot prompts.",
+  "id": "jscalated-binary-runner",
+  "version": "1.0.0",
+  "categories": [
+    "utilities"
+  ],
+  "start_url": "/index.html",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "theme_color": "#000000",
+  "background_color": "#ffffff",
+  "icons": [
+    {
+      "src": "/icons/icon-112.png",
+      "type": "image/png",
+      "sizes": "112x112"
+    }
+  ],
+  "b2g_features": {
+    "version": "1.0",
+    "type": "web",
+    "core": true,
+    "origin": "jscalated-binary-runner",
+    "permissions": {
+      "device-storage:apps": {
+        "access": "readwrite"
+      },
+      "webapps-manage": {}
+    },
+    "developer": {
+      "name": "JScalated"
+    }
+  }
+}
