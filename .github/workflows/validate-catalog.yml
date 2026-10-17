@@ -1,0 +1,13 @@
+name: Validate store catalogue
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check release URLs and update manifests
+        run: python3 tools/validate_catalog.py
