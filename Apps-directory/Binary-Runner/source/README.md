@@ -1,22 +1,46 @@
-# Binary Runner 1.0.3
+# Binary Runner 1.0.8
 
-The app bundles two ARMv7 binaries and a separate profile XPI. The XPI keeps
-the binary replacement request one-shot and starts a loopback debug command
-socket on port 5556 at B2G startup. It does not restart B2G, reboot the phone,
-or run a bundled binary when the socket starts.
+Binary Runner offers the bundled ARMv7 and Nokia 2760 GhostLock binaries on
+KaiOS 3. It keeps keypad navigation: Up/Down moves focus, Left/Right changes
+the selected binary, the center key activates the focused control, the left
+softkey returns to the binary choice, and the right softkey opens logs. The
+binary chooser is a button so scrolling cannot open a native select popup.
 
-To install or refresh the XPI from the app, select **Install debug XPI** and
-restart the phone manually. **Refresh XPI logs** shows the listener state and
-the token. Connect to `127.0.0.1:5556`, send `AUTH <token>`, then `STATUS` or
-`RUN <command>`. Commands run under B2G's permissions, with an eight-second
-limit and up to 8192 bytes of output. If B2G is forbidden from launching
-`/system/bin/sh`, the socket reports the launch error. It is not a root shell.
+## Stage a binary
 
-Build with `python tools/package_app.py`. Run the filesystem and socket mock
-checks with `node tools/mock_xpi_test.js`. These checks do not prove that the
-phone loads the XPI, permits the socket, or allows B2G to start the shell.
+1. Select a binary and choose **Stage binary**. The app checks the bundled
+   binary's size, SHA-256, and ARM ELF header, then writes a one-time request
+   for its separate installer XPI. It does not replace the JScalated ADB XPI.
+2. Reboot manually once. The installer stops the updater-daemon service using
+   its service name, removes both the installed file and init marker, starts
+   the stock wrapper, and verifies a fresh stock updater against the system copy.
+3. The installer stops the service again, confirms the stock file is writable,
+   copies the chosen binary **into that existing inode** with cp -f, sets mode
+   0755, and checks SHA-256, inode, SELinux label, and stopped service state.
+   If staging fails, it attempts to restore and start the stock updater.
+4. Choose **Check status**. After a successful result, reboot manually again
+   to start the chosen binary. Neither the app nor the XPI reboots the phone.
 
-The release ZIP contains META-INF fixture records made by the existing Python
-research signer. That script says its CMS signature is cryptographically
-invalid. Device installation must be tested separately; the ZIP must not be
-described as genuinely signed.
+**Restore stock updater** saves a separate one-time XPI request. On the next
+manual reboot, the XPI stops the updater, removes the installed file and init,
+starts the stock wrapper, and verifies the restored file. This avoids deleting
+the live updater from the app before the helper can control the service.
+
+The debug XPI listens on loopback port 5556 and accepts local commands without
+a token, as requested. Other local processes may be able to connect to that
+socket. GhostLock's root shell, when the device-specific exploit succeeds, is
+separate and listens on loopback port 5557.
+
+Samuel reported a root prompt from port 5557 after manually restoring a fresh
+stock updater on the Cingular Flex 2, copying ghostlock_armv7 into the
+existing updater inode, preserving its system_data_file label, setting 0755,
+and rebooting. That is live evidence for the ARMv7 binary on that phone. The
+1.0.8 app's new automated sequence and the Nokia 2760 binary still need their
+own handset checks.
+
+Build with python package_app.py. python verify_package.py checks ZIP
+integrity, nested XPI, manifests, and payload hashes. The available standalone
+Python signer adds META-INF from an embedded reference and is a **signature
+test fixture**: its CMS signature is copied, not recalculated with a private
+key. It is not an authentic cryptographic signature; handset acceptance must
+be checked separately.

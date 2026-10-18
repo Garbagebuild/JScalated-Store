@@ -1,124 +1,36 @@
 "use strict";
-
 const { Services } = ChromeUtils.import("resource://gre/modules/Services.jsm");
 const ALLOWED = __ALLOWLIST__;
-const TARGET_DIR = "/data/local/service/updater";
-const TARGET_PATH = TARGET_DIR + "/updater-daemon";
-const BACKUP_PATH = TARGET_DIR + "/jscalated-runner";
-const REQUEST_NAME = "binary-runner-request.json";
-const MAX_BYTES = 16 * 1024 * 1024;
-
-function fileAt(path) {
-  const file = Cc["@mozilla.org/file/local;1"].createInstance(Ci.nsIFile);
-  file.initWithPath(path);
-  return file;
-}
-
-function regular(file, max) {
-  return file.exists() && !file.isSymlink() && file.isFile() &&
-    file.fileSize > 0 && file.fileSize <= max;
-}
-
-function readText(file, limit = 4096) {
-  if (!regular(file, limit)) throw new Error("Missing or invalid text file: " + file.path);
-  const input = Cc["@mozilla.org/network/file-input-stream;1"]
-    .createInstance(Ci.nsIFileInputStream);
-  input.init(file, 0x01, 0, 0);
-  const converter = Cc["@mozilla.org/intl/converter-input-stream;1"]
-    .createInstance(Ci.nsIConverterInputStream);
-  converter.init(input, "UTF-8", 0, 0);
-  const result = {};
-  try { converter.readString(-1, result); }
-  finally { converter.close(); }
-  return result.value;
-}
-
-function sha256(file) {
-  if (!regular(file, MAX_BYTES)) throw new Error("Invalid binary file: " + file.path);
-  const input = Cc["@mozilla.org/network/file-input-stream;1"]
-    .createInstance(Ci.nsIFileInputStream);
-  input.init(file, 0x01, 0, 0);
-  const hash = Cc["@mozilla.org/security/hash;1"]
-    .createInstance(Ci.nsICryptoHash);
-  hash.init(hash.SHA256);
-  try { hash.updateFromStream(input, file.fileSize); }
-  finally { input.close(); }
-  const digest = hash.finish(false);
-  let hex = "";
-  for (let i = 0; i < digest.length; i++)
-    hex += (digest.charCodeAt(i) + 256).toString(16).slice(1);
-  return hex;
-}
-
-function writeStatus(profile, id, state, detail) {
-  const status = fileAt(profile.path + "/binary-runner-status-" + id + ".json");
-  if (status.exists() && (status.isSymlink() || !status.isFile()))
-    throw new Error("Unsafe status path");
-  const value = JSON.stringify({ id, state,
-    detail: String(detail).replace(/[^\x20-\x7e]/g, "?") }) + "\n";
-  const output = Cc["@mozilla.org/network/file-output-stream;1"]
-    .createInstance(Ci.nsIFileOutputStream);
-  output.init(status, 0x02 | 0x08 | 0x20, 0o600, 0);
-  try {
-    if (output.write(value, value.length) !== value.length)
-      throw new Error("Short status write");
-  } finally { output.close(); }
-  appendEvent(profile, "request " + id + " " + state + ": " + detail);
-}
-
-function writeText(file, value) {
-  if (file.exists() && (file.isSymlink() || !file.isFile()))
-    throw new Error("Unsafe output path: " + file.path);
-  const output = Cc["@mozilla.org/network/file-output-stream;1"]
-    .createInstance(Ci.nsIFileOutputStream);
-  output.init(file, 0x02 | 0x08 | 0x20, 0o600, 0);
-  try {
-    if (output.write(value, value.length) !== value.length)
-      throw new Error("Short output write");
-  } finally { output.close(); }
-}
-
-function appendEvent(profile, detail) {
-  try {
-    const file = fileAt(profile.path + "/binary-runner-events.log");
-    if (file.exists() && (file.isSymlink() || !file.isFile())) return;
-    const reset = file.exists() && file.fileSize > 32768;
-    const value = new Date().toISOString() + " " +
-      String(detail).replace(/[^\x20-\x7e]/g, "?").slice(0, 512) + "\n";
-    const output = Cc["@mozilla.org/network/file-output-stream;1"]
-      .createInstance(Ci.nsIFileOutputStream);
-    output.init(file, 0x02 | 0x08 | (reset ? 0x20 : 0x10), 0o600, 0);
-    try { output.write(value, value.length); }
-    finally { output.close(); }
-  } catch (error) { console.error("Binary Runner log write failed: " + error); }
-}
-
+const UPDATER = "/data/local/service/updater/updater-daemon";
+const UPDATER_DIR = "/data/local/service/updater";
+const STOCK_UPDATER = "/system/kaios/updater-daemon";
+const BACKUPS = UPDATER_DIR + "/jscalated-runner";
+const REQUEST = "binary-runner-request.json";
+const MAX = 16 * 1024 * 1024;
+function fileAt(path){const f=Cc["@mozilla.org/file/local;1"].createInstance(Ci.nsIFile);f.initWithPath(path);return f;}
+function regular(f,max=MAX){return f.exists()&&!f.isSymlink()&&f.isFile()&&f.fileSize>0&&f.fileSize<=max;}
+function createDir(path){const d=fileAt(path);if(!d.exists())d.create(Ci.nsIFile.DIRECTORY_TYPE,0o700);if(d.isSymlink()||!d.isDirectory())throw Error("Unsafe directory: "+path);return d;}
+function readText(f,max=4096){if(!regular(f,max))throw Error("Missing request file");const stream=Cc["@mozilla.org/network/file-input-stream;1"].createInstance(Ci.nsIFileInputStream);stream.init(f,0x01,0,0);
+ const ci=Cc["@mozilla.org/intl/converter-input-stream;1"].createInstance(Ci.nsIConverterInputStream);ci.init(stream,"UTF-8",0,0);let out={};try{ci.readString(-1,out);}finally{ci.close();}return out.value;}
+function sha256(f){if(!regular(f))throw Error("Missing or unsafe binary: "+f.path);
+ const input=Cc["@mozilla.org/network/file-input-stream;1"].createInstance(Ci.nsIFileInputStream);input.init(f,0x01,0,0);
+ const hash=Cc["@mozilla.org/security/hash;1"].createInstance(Ci.nsICryptoHash);hash.init(hash.SHA256);
+ try{hash.updateFromStream(input,f.fileSize);}finally{input.close();}const digest=hash.finish(false);let hex="";for(let i=0;i<digest.length;i++)hex+=(digest.charCodeAt(i)+256).toString(16).slice(1);return hex;}
+function writeText(f,value,append){if(f.exists()&&(f.isSymlink()||!f.isFile()))throw Error("Unsafe output path");
+ const stream=Cc["@mozilla.org/network/file-output-stream;1"].createInstance(Ci.nsIFileOutputStream);
+ stream.init(f,0x02|0x08|(append?0x10:0x20),0o600,0);
+ try{if(stream.write(value,value.length)!==value.length)throw Error("Short write");}finally{stream.close();}}
+function event(profile,msg){try{const f=fileAt(profile.path+"/binary-runner-events.log");const value=new Date().toISOString()+" "+String(msg).replace(/[^\x20-\x7e]/g,"?").slice(0,440)+"\n";
+ writeText(f,value,!(f.exists()&&f.fileSize>32768));}catch(e){console.error("Binary Runner events: "+e);}}
+function result(profile,id,state,message){writeText(fileAt(profile.path+"/binary-runner-status-"+id+".json"),JSON.stringify({id,state,detail:String(message).replace(/[^\x20-\x7e]/g,"?")})+"\n",false);event(profile,"request "+id+" "+state+": "+message);}
 function socketState(profile, state, detail) {
   writeText(fileAt(profile.path + "/binary-runner-socket.json"),
     JSON.stringify({ state, port: 5556, detail: String(detail).slice(0, 512) }) + "\n");
-  appendEvent(profile, "socket " + state + ": " + detail);
+  event(profile, "socket " + state + ": " + detail);
 }
 
-function debugToken(profile) {
-  const file = fileAt(profile.path + "/binary-runner-debug-token");
-  if (file.exists()) {
-    if (file.isSymlink() || !file.isFile() || (file.permissions & 0o077))
-      throw new Error("Unsafe debug token file");
-    const token = readText(file).trim();
-    if (!/^[0-9a-f]{32}$/.test(token)) throw new Error("Invalid debug token");
-    return token;
-  }
-  const token = Cc["@mozilla.org/uuid-generator;1"].getService(Ci.nsIUUIDGenerator)
-    .generateUUID().toString().replace(/[{}-]/g, "").toLowerCase();
-  if (!/^[0-9a-f]{32}$/.test(token)) throw new Error("Could not generate debug token");
-  writeText(file, token + "\n");
-  file.permissions = 0o600;
-  return token;
-}
-
-// One authenticated command per RUN line. No command runs at XPI startup.
+// No command runs at XPI startup. The listener is limited to loopback.
 function startDebugSocket(profile) {
-  const token = debugToken(profile);
   const server = Cc["@mozilla.org/network/server-socket;1"]
     .createInstance(Ci.nsIServerSocket);
   server.init(5556, true, 2);
@@ -131,36 +43,53 @@ function startDebugSocket(profile) {
       if (closed || clients.size >= 2) { transport.close(0); return; }
       const input = transport.openInputStream(0, 0, 0);
       const output = transport.openOutputStream(Ci.nsITransport.OPEN_BLOCKING, 0, 0);
-      const client = { transport, output, buffer: "", authorized: false, pump: null };
+      const client = { transport, output, buffer: "", pump: null };
       clients.add(client);
       function send(value) {
         try {
           if (output.write(value, value.length) !== value.length)
             throw new Error("Short socket write");
         } catch (error) {
-          appendEvent(profile, "socket write failed: " + error);
+          event(profile, "socket write failed: " + error);
           transport.close(0);
         }
       }
       function command(line) {
-        if (!client.authorized) {
-          if (line === "AUTH " + token) {
-            client.authorized = true;
-            send("OK. Enter RUN <command>, STATUS, or QUIT.\n");
-          } else {
-            send("Authentication failed.\n");
-            transport.close(0);
-          }
-          return;
-        }
         if (line === "QUIT") { transport.close(0); return; }
         if (line === "STATUS") {
           send("B2G command socket listening on 127.0.0.1:5556; " +
             (busy ? "command running" : "idle") + ".\n");
           return;
         }
+        if (line === "INSPECT") {
+          const paths = [UPDATER, BACKUPS + "/first-use-backup/updater-daemon",
+            UPDATER_DIR + "/init"];
+          for (const path of paths) {
+            try {
+              const file = fileAt(path);
+              if (!file.exists()) { send(path + ": missing\n"); continue; }
+              if (file.isSymlink() || !file.isFile()) {
+                send(path + ": not a regular file\n"); continue;
+              }
+              const mode = (file.permissions & 0o777).toString(8).padStart(3, "0");
+              const digest = file.fileSize && file.fileSize <= MAX ?
+                " sha256=" + sha256(file) : "";
+              send(path + ": size=" + file.fileSize + " mode=" + mode + digest + "\n");
+            } catch (error) { send(path + ": inspection failed: " + error + "\n"); }
+          }
+          return;
+        }
+        if (line === "LOG") {
+          try {
+            const file = fileAt(profile.path + "/binary-runner-events.log");
+            if (!file.exists()) { send("No XPI log yet.\n"); return; }
+            const lines = readText(file, 32768).trim().split(/\r?\n/).slice(-12);
+            send(lines.join("\n").slice(-4096) + "\n");
+          } catch (error) { send("Log read failed: " + error + "\n"); }
+          return;
+        }
         if (!/^RUN [\x20-\x7e]{1,256}$/.test(line)) {
-          send("Use RUN <command>, STATUS, or QUIT.\n");
+          send("Use INSPECT, LOG, STATUS, RUN <command>, or QUIT.\n");
           return;
         }
         if (busy) { send("A command is already running.\n"); return; }
@@ -197,14 +126,14 @@ function startDebugSocket(profile) {
               catch (error) { outcome = "exit status unavailable: " + error; }
             }
             send(result + "\n[" + outcome + "]\n");
-            appendEvent(profile, "debug command finished: " + outcome);
+            event(profile, "debug command finished: " + outcome);
           } }, false);
-          appendEvent(profile, "debug command started");
+          event(profile, "debug command started");
         } catch (error) {
           if (timer) timer.cancel();
           busy = false;
           send("Command could not start: " + error + "\n");
-          appendEvent(profile, "debug command start failed: " + error);
+          event(profile, "debug command start failed: " + error);
         }
       }
       const pump = Cc["@mozilla.org/network/input-stream-pump;1"]
@@ -212,7 +141,7 @@ function startDebugSocket(profile) {
       client.pump = pump;
       pump.init(input, 0, 0, true);
       pump.asyncRead({
-        onStartRequest() { send("Binary Runner debug socket. AUTH <token> required.\n"); },
+        onStartRequest() { send("Binary Runner B2G socket. INSPECT, LOG, STATUS, RUN <command>, QUIT.\n"); },
         onDataAvailable(_request, stream, _offset, count) {
           if (count > 1024) { transport.close(0); throw new Error("Debug input too long"); }
           const reader = Cc["@mozilla.org/scriptableinputstream;1"]
@@ -238,7 +167,7 @@ function startDebugSocket(profile) {
     }
   };
   server.asyncListen(listener);
-  try { socketState(profile, "listening", "127.0.0.1:5556; authenticated command access"); }
+  try { socketState(profile, "listening", "127.0.0.1:5556; local command access"); }
   catch (error) { console.error("Binary Runner socket status write failed: " + error); }
   return { close() {
     closed = true;
@@ -249,171 +178,129 @@ function startDebugSocket(profile) {
   } };
 }
 
-function validateRequest(value) {
-  if (!value || !/^[0-9a-f]{16}$/.test(value.id) ||
-      (value.action !== "stage" && value.action !== "restore"))
-    throw new Error("Invalid Binary Runner request");
-  if (value.action === "stage") {
-    const entry = ALLOWED[value.name];
-    if (!entry || value.sha256 !== entry.sha256 || value.size !== entry.size)
-      throw new Error("Binary is not in this release's allowlist");
-  }
-  return value;
+function verify(f,hash){if(sha256(f)!==hash)throw Error("Readback hash mismatch");if((f.permissions&0o111)!==0o111)throw Error("Executable mode missing: "+f.permissions.toString(8));}
+function quote(value){return "'"+String(value).replace(/'/g,"'\\''")+"'";}
+function runShell(script){const shell=fileAt("/system/bin/sh");
+ if(!shell.exists()||!shell.isFile())throw Error("System shell unavailable");
+ const process=Cc["@mozilla.org/process/util;1"].createInstance(Ci.nsIProcess);
+ process.init(shell);process.run(true,["-c",script],2);
+ if(process.exitValue!==0)throw Error("System command failed (exit "+process.exitValue+")");
 }
-
-function ensureDirectory(path) {
-  const directory = fileAt(path);
-  if (!directory.exists()) directory.create(Ci.nsIFile.DIRECTORY_TYPE, 0o700);
-  if (directory.isSymlink() || !directory.isDirectory())
-    throw new Error("Unsafe directory: " + path);
-  return directory;
+function updaterMeta(profile,id){const out=fileAt(profile.path+"/binary-runner-meta-"+id+".txt");
+ if(out.exists()){if(out.isSymlink()||!out.isFile())throw Error("Unsafe metadata report");out.remove(false);}
+ try{
+  runShell("/system/bin/ls -liZ "+quote(UPDATER)+" > "+quote(out.path));
+  const line=readText(out,1024);
+  const match=/^\s*(\d+)\s+\S+\s+\d+\s+\S+\s+\S+\s+(u:object_r:[A-Za-z0-9_]+:s0)\s+/.exec(line);
+  if(!match)throw Error("Could not read updater inode and SELinux label");
+  return {inode:match[1],label:match[2]};
+ }finally{if(out.exists())out.remove(false);}
 }
-
-function verify(file, hash) {
-  if (sha256(file) !== hash) throw new Error("Binary readback hash mismatch");
-  if ((file.permissions & 0o111) !== 0o111)
-    throw new Error("Executable permission bits are missing");
+function stopUpdater(){runShell("/system/bin/setprop ctl.stop updater-daemon || exit 11; " +
+ "i=0; while [ \"$i\" -lt 5 ]; do " +
+ "[ \"$(/system/bin/getprop init.svc.updater-daemon)\" = stopped ] && exit 0; " +
+ "/system/bin/sleep 1; i=$((i+1)); done; exit 12");}
+function startUpdater(){runShell("/system/bin/setprop ctl.start updater-daemon || exit 21; " +
+ "i=0; while [ \"$i\" -lt 5 ]; do " +
+ "[ \"$(/system/bin/getprop init.svc.updater-daemon)\" = running ] && " +
+ "[ -f "+quote(UPDATER)+" ] && [ -f "+quote(UPDATER_DIR+"/init")+" ] && exit 0; " +
+ "/system/bin/sleep 1; i=$((i+1)); done; exit 22");}
+function copyWithMode(source,parent,name,mode){if(!regular(source))throw Error("Invalid copy source");const expected=sha256(source);const dest=fileAt(parent.path+"/"+name);if(dest.exists())throw Error("Copy destination already exists");
+ source.copyTo(parent,name);if(!regular(dest))throw Error("Backup copy failed");
+ dest.permissions=mode;
+ if(sha256(dest)!==expected)throw Error("Backup hash mismatch");
+ if((dest.permissions&0o777)!==(mode&0o777))throw Error("Backup mode mismatch");
+ return dest;}
+function ensureFirstBackup(stock){const d=createDir(BACKUPS+"/first-use-backup");const f=fileAt(d.path+"/updater-daemon");
+ if(f.exists()){if(!regular(f))throw Error("Old first-use backup invalid");event(Services.dirsvc.get("ProfD",Ci.nsIFile),"First-use backup preserved, mode "+f.permissions.toString(8));return;}
+ copyWithMode(stock,d,"updater-daemon",0o755);}
+function restoreStock(profile,id){
+ const stock=fileAt(STOCK_UPDATER),target=fileAt(UPDATER),init=fileAt(UPDATER_DIR+"/init");
+ if(!regular(stock))throw Error("System stock updater missing or unsafe");
+ if((stock.permissions&0o111)!==0o111)throw Error("System stock updater is not executable");
+ const expected=sha256(stock);
+ for(const f of [target,init])if(f.exists()&&(f.isSymlink()||!f.isFile()))
+   throw Error("Unsafe updater path: "+f.path);
+ stopUpdater();
+ // Removing both files makes the stock wrapper create a fresh inode and label.
+ if(init.exists())init.remove(false);
+ if(target.exists())target.remove(false);
+ if(target.exists()||init.exists())throw Error("Could not clear old updater and init marker");
+ startUpdater();
+ if(!regular(target)||!init.exists()||init.isSymlink()||!init.isFile())
+   throw Error("Stock wrapper did not recreate updater and init marker");
+ if(sha256(target)!==expected||(target.permissions&0o777)!==0o755)
+   throw Error("Restored updater does not match the executable system stock copy");
+ const meta=updaterMeta(profile,id);
+ if(/:(b2g_data_file|shell_data_file):/.test(meta.label))
+   throw Error("Restored updater has unexpected SELinux label "+meta.label);
+ event(profile,"Stock restored: SHA256 "+expected+" mode 0755 label "+meta.label+" inode "+meta.inode);
+ return {hash:expected,meta};
 }
-
-function restoreContext(path) {
-  const shell = fileAt("/system/bin/sh");
-  if (!shell.exists() || !shell.isFile())
-    throw new Error("System shell is unavailable");
-  const process = Cc["@mozilla.org/process/util;1"].createInstance(Ci.nsIProcess);
-  process.init(shell);
-  if (!/^\/data\/local\/service\/updater\/[A-Za-z0-9._-]+$/.test(path))
-    throw new Error("Unsafe restorecon path");
-  process.run(true, ["-c", "restorecon '" + path + "'"], 2);
-  if (process.exitValue !== 0)
-    throw new Error("restorecon failed with exit " + process.exitValue);
+function replaceFrom(source,expected,id,profile,stock){const target=fileAt(UPDATER),dir=fileAt(UPDATER_DIR);
+ if(!regular(target))throw Error("Updater target missing or unsafe");
+ const oldHash=sha256(target),oldMode=target.permissions&0o777;
+ if(oldHash!==stock.hash||oldMode!==0o755)throw Error("Stock updater changed before staging");
+ const tempName=".binary-runner-stage-"+id, temp=copyWithMode(source,dir,tempName,0o755);
+ verify(temp,expected);
+ const oldDir=createDir(BACKUPS+"/backup-"+id);
+ copyWithMode(target,oldDir,"updater-daemon",oldMode);
+ event(profile,"Stock updater backup saved: SHA256 "+oldHash+" label "+stock.meta.label);
+ try{
+  stopUpdater();
+  // A successful empty append proves the stock inode can be written in place.
+  runShell(": >> "+quote(UPDATER));
+  const before=updaterMeta(profile,id);
+  if(before.inode!==stock.meta.inode||before.label!==stock.meta.label)
+    throw Error("Stock updater inode or SELinux label changed before copy");
+  runShell("/system/bin/cp -f "+quote(temp.path)+" "+quote(UPDATER)+
+   " && /system/bin/chmod 755 "+quote(UPDATER));
+  const installed=fileAt(UPDATER);verify(installed,expected);
+  if((installed.permissions&0o777)!==0o755)throw Error("Updater mode is not 0755");
+  const after=updaterMeta(profile,id);
+  if(after.inode!==before.inode||after.label!==before.label)
+    throw Error("Updater inode or SELinux label changed during copy");
+  runShell("[ \"$(/system/bin/getprop init.svc.updater-daemon)\" = stopped ]");
+  event(profile,"New updater SHA256 "+expected+" mode 0755 label "+after.label+
+    " inode "+after.inode+" preserved; service stopped");
+  try{temp.remove(false);}catch(cleanupError){event(profile,"Staged copy cleanup failed: "+cleanupError);}
+ }catch(e){
+  let note="";
+  try{restoreStock(profile,id);note="stock updater restored and running";}
+  catch(r){note="CRITICAL: stock recovery failed: "+r;}
+  throw Error(e+"; "+note);
+ }
 }
-
-function firstUseBackup(target) {
-  const directory = ensureDirectory(BACKUP_PATH + "/first-use-backup");
-  const backup = fileAt(directory.path + "/updater-daemon");
-  if (backup.exists()) {
-    if (!regular(backup, MAX_BYTES)) throw new Error("First-use backup is invalid");
-    return backup;
-  }
-  if ((target.permissions & 0o111) !== 0o111)
-    throw new Error("Cannot back up a nonexecutable updater as the first-use file");
-  const expected = sha256(target);
-  target.copyTo(directory, "updater-daemon");
-  if (sha256(backup) !== expected) throw new Error("First-use backup did not verify");
-  return backup;
+function validate(v){if(!v||!/^[a-f0-9]{16}$/.test(v.id))throw Error("Unrecognized staging request");
+ if(v.action==="restore"&&Object.keys(v).length===2)return v;
+ if(v.action!=="stage"||!ALLOWED[v.name]||ALLOWED[v.name].size!==v.size||ALLOWED[v.name].sha256!==v.sha256)
+   throw Error("Unrecognized staging request");
+ return v;}
+function perform(p,v){
+ if(v.action==="restore"){
+  restoreStock(p,v.id);
+  return "Stock updater restored and running; hash, mode, and SELinux label verified.";
+ }
+ const src=fileAt(p.path+"/binary-runner-payload-"+v.id+".bin");
+ if(!regular(src,v.size)||src.fileSize!==v.size||sha256(src)!==v.sha256)throw Error("Staged binary failed verification");
+ const stock=restoreStock(p,v.id);
+ createDir(BACKUPS);ensureFirstBackup(fileAt(STOCK_UPDATER));
+ replaceFrom(src,v.sha256,v.id,p,stock);
+ return "Copied "+v.name+" into the fresh stock inode; hash, mode 0755, and SELinux label verified. Reboot manually once more to start it.";
 }
-
-function replace(source, expected, id) {
-  const directory = fileAt(TARGET_DIR);
-  const target = fileAt(TARGET_PATH);
-  if (!regular(target, MAX_BYTES)) throw new Error("Updater executable is missing or unsafe");
-  const oldHash = sha256(target);
-  if (oldHash === expected) {
-    target.permissions = 0o755;
-    verify(target, expected);
-    restoreContext(TARGET_PATH);
-    return "existing bytes made executable";
-  }
-
-  const temporaryName = ".jscalated-stage-" + id;
-  const temporary = fileAt(TARGET_DIR + "/" + temporaryName);
-  if (temporary.exists()) throw new Error("Temporary path already exists");
-  source.copyTo(directory, temporaryName);
-  temporary.permissions = 0o755;
-  verify(temporary, expected);
-  restoreContext(temporary.path);
-
-  const previous = ensureDirectory(BACKUP_PATH + "/backup-" + id);
-  const saved = fileAt(previous.path + "/updater-daemon");
-  if (saved.exists()) throw new Error("Previous-file backup already exists");
-  let replaced = false;
-  try {
-    target.copyTo(previous, "updater-daemon");
-    if (sha256(saved) !== oldHash) throw new Error("Previous-file backup did not verify");
-    if ((saved.permissions & 0o111) !== (target.permissions & 0o111))
-      throw new Error("Previous-file backup lost executable permissions");
-    temporary.moveTo(directory, "updater-daemon");
-    replaced = true;
-    const installed = fileAt(TARGET_PATH);
-    installed.permissions = 0o755;
-    verify(installed, expected);
-    restoreContext(TARGET_PATH);
-    verify(installed, expected);
-    return "binary placed, mode verified, and prior file saved";
-  } catch (error) {
-    if (!replaced) throw error;
-    let rollback = "";
-    try {
-      const rollbackName = ".jscalated-rollback-" + id;
-      const rollbackFile = fileAt(TARGET_DIR + "/" + rollbackName);
-      if (rollbackFile.exists()) throw new Error("Rollback path already exists");
-      saved.copyTo(directory, rollbackName);
-      if (sha256(rollbackFile) !== oldHash)
-        throw new Error("Rollback copy hash mismatch");
-      rollbackFile.moveTo(directory, "updater-daemon");
-      restoreContext(TARGET_PATH);
-      if (sha256(fileAt(TARGET_PATH)) !== oldHash)
-        throw new Error("Restored file hash mismatch");
-      rollback = "previous file restored";
-    } catch (restoreError) {
-      rollback = "RESTORE FAILED: " + String(restoreError);
-    }
-    throw new Error(String(error) + "; " + rollback);
-  }
-}
-
-function perform(profile, request) {
-  const marker = fileAt(TARGET_DIR + "/init");
-  if (!marker.exists() || marker.isSymlink() || !marker.isFile())
-    throw new Error("Updater init marker is missing");
-  ensureDirectory(BACKUP_PATH);
-  const target = fileAt(TARGET_PATH);
-  if (!regular(target, MAX_BYTES)) throw new Error("Updater executable is missing or unsafe");
-
-  let source;
-  let expected;
-  if (request.action === "stage") {
-    source = fileAt(profile.path + "/binary-runner-payload-" + request.id + ".bin");
-    if (!regular(source, request.size) || source.fileSize !== request.size)
-      throw new Error("Staged binary size does not match");
-    expected = request.sha256;
-    if (sha256(source) !== expected) throw new Error("Staged binary hash does not match");
-    firstUseBackup(target);
-  } else {
-    source = fileAt(BACKUP_PATH + "/first-use-backup/updater-daemon");
-    if (!regular(source, MAX_BYTES)) throw new Error("First-use backup is unavailable");
-    expected = sha256(source);
-  }
-  return replace(source, expected, request.id);
-}
-
-this.binaryRunnerInstaller = class extends ExtensionAPI {
-  onStartup() {
-    const profile = Services.dirsvc.get("ProfD", Ci.nsIFile);
-    try { this.debugSocket = startDebugSocket(profile); }
-    catch (error) {
-      try { socketState(profile, "failed", error); } catch (_) {}
-      console.error("Binary Runner debug socket failed: " + error);
-    }
-    const requestFile = fileAt(profile.path + "/" + REQUEST_NAME);
-    if (!requestFile.exists()) return;
-    let request;
-    try {
-      request = validateRequest(JSON.parse(readText(requestFile)));
-      const attempt = fileAt(profile.path + "/binary-runner-attempt-" + request.id);
-      if (attempt.exists()) return;
-      attempt.create(Ci.nsIFile.NORMAL_FILE_TYPE, 0o600);
-      writeStatus(profile, request.id, "running", "Installer started");
-      const result = perform(profile, request);
-      writeStatus(profile, request.id, "success", result);
-    } catch (error) {
-      try {
-        if (request) writeStatus(profile, request.id, "failed", error);
-      } catch (_) {}
-      console.error("Binary Runner installer stopped: " + String(error));
-    }
-  }
-  onShutdown() {
-    if (this.debugSocket) this.debugSocket.close();
-  }
+this.binaryRunnerInstaller=class extends ExtensionAPI{
+ onStartup(){const p=Services.dirsvc.get("ProfD",Ci.nsIFile),f=fileAt(p.path+"/"+REQUEST);
+  try{this.debugSocket=startDebugSocket(p);}catch(e){event(p,"Debug socket failed: "+e);}
+  if(!f.exists())return;
+  let v;
+  try{
+   v=validate(JSON.parse(readText(f)));
+   const marker=fileAt(p.path+"/binary-runner-attempt-"+v.id);
+   if(marker.exists())return;
+   marker.create(Ci.nsIFile.NORMAL_FILE_TYPE,0o600);
+   result(p,v.id,"running","Installer started");
+   result(p,v.id,"success",perform(p,v));
+  }catch(e){try{if(v)result(p,v.id,"failed",e);}catch(ignored){}console.error("Binary Runner stopped: "+e);}
+ }
+ onShutdown(){if(this.debugSocket)this.debugSocket.close();}
 };

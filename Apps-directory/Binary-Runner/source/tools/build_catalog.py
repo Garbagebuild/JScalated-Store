@@ -36,7 +36,10 @@ def inspect(path: Path, kind: str) -> dict[str, object]:
 def main() -> None:
     entries = []
     for folder, kind in (("binaries", "binary"), ("scripts", "script")):
-        for path in sorted((PAYLOADS / folder).iterdir()):
+        folder_path = PAYLOADS / folder
+        if not folder_path.exists():
+            continue
+        for path in sorted(folder_path.iterdir()):
             if path.name == ".gitkeep":
                 continue
             entries.append(inspect(path, kind))

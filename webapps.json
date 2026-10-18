@@ -32,15 +32,14 @@
       "package_url": "https://github.com/Garbagebuild/JScalated-Store/releases/download/jscalated-apps-1/Baldis-Basics-2.1.0.zip",
       "sha256": "c32617c462d03db3148bb10b7a5e1c3c4126943c754c1e9484fd5744d94d6a9f"
     },
-    
     {
       "folder": "Binary-Runner",
       "name": "Binary Runner",
-      "version": "1.0.3",
+      "version": "1.0.8",
       "category": "utilities",
-      "description": "Stage a bundled binary as the KaiOS updater daemon with backup and verification.",
-      "package_url": "https://github.com/Garbagebuild/JScalated-Store/releases/download/jscalated-apps-1/Binary-Runner-1.0.3.zip",
-      "sha256": "b750494257bce9fd962a11f540bf4631d7b2443f59a593e65b8ff4fbba552149"
+      "description": "Stage a GhostLock binary, inspect results, and restore the stock updater.",
+      "package_url": "https://github.com/Garbagebuild/JScalated-Store/releases/download/jscalated-apps-1/Binary-Runner-1.0.8.zip",
+      "sha256": "7892baf73d3ed111a0c9f8cd4c48385d6979b3f009d5a8d0595bdb25b37f00c2"
     },
     {
       "folder": "JScalated-Store",

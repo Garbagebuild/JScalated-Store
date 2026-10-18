@@ -2,9 +2,9 @@
   "lang": "en-US",
   "name": "Binary Runner",
   "short_name": "BinaryRunner",
-  "description": "Stage a bundled binary as the KaiOS updater daemon with backup and verification.",
+  "description": "Stage a GhostLock binary, inspect results, and restore the stock updater.",
   "id": "jscalated-binary-runner",
-  "version": "1.0.3",
+  "version": "1.0.8",
   "categories": [
     "utilities"
   ],
@@ -22,7 +22,7 @@
     }
   ],
   "b2g_features": {
-    "version": "1.0.3",
+    "version": "1.0.8",
     "type": "web",
     "core": true,
     "origin": "jscalated-binary-runner",

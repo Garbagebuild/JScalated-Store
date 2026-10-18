@@ -3,14 +3,14 @@
     "name": "ghostlock_armv7",
     "kind": "binary",
     "path": "payloads/binaries/ghostlock_armv7",
-    "size": 143172,
-    "sha256": "6dd5b2d7bbb1ac77225bf4b3f32e0d279809203763ef131bf75a468a5e6d9d81"
+    "size": 139508,
+    "sha256": "8d18086b8cdcdc97e1f89a752d43cc49f49606525bf50d552f976728c1288910"
   },
   {
     "name": "ghostlock_nokia2760",
     "kind": "binary",
     "path": "payloads/binaries/ghostlock_nokia2760",
-    "size": 142684,
-    "sha256": "58d0056203b1807e774ab37b024b10fbb38ed225f11ed3d81c868fc4bf98aec7"
+    "size": 142964,
+    "sha256": "53c4fc54b81a5e6c145ada21515d9714a991cf200af6b1d0e62a8f6744597168"
   }
 ]

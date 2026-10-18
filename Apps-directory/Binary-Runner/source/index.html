@@ -1,40 +1,25 @@
 <!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#ffffff">
-  <title>JScalated Binary Runner</title>
-  <link rel="manifest" href="manifest.webmanifest">
-  <link rel="stylesheet" href="style.css">
-  <script src="runner.js" defer></script>
-</head>
-<body>
-  <main>
-    <h1>JScalated Binary Runner</h1>
-    <p>Choose a bundled binary. A separate installer applies it and checks executable permissions after a manual restart. Inspect the result before relying on it at boot.</p>
-
-    <label for="choice">Bundled file</label>
-    <select id="choice" aria-describedby="detail">
-      <option>Loading bundled files…</option>
-    </select>
-    <p id="detail"></p>
-    <p class="key-hint">Up/Down: buttons · Left: file selector · Right: change file · OK: activate</p>
-
-    <div class="actions">
-      <button id="inspect" type="button">Inspect updater</button>
-      <button id="stage" type="button" disabled>Stage selected file</button>
-      <button id="restore" type="button">Restore first-use file</button>
-      <button id="debug" type="button">Install debug XPI</button>
-    </div>
-
-    <p id="status" role="status" aria-live="polite">Loading bundled files…</p>
-    <section aria-labelledby="logs-heading">
-      <h2 id="logs-heading">Logs</h2>
-      <p>Install the debug XPI, restart manually, then refresh. The local command socket uses port 5556 and requires the AUTH token shown below.</p>
-      <button id="refresh-logs" type="button">Refresh XPI logs</button>
-      <pre id="log" role="log" aria-live="polite"></pre>
-    </section>
-  </main>
-</body>
-</html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#0b1822">
+<title>Binary Runner</title>
+<link rel="manifest" href="manifest.webmanifest"><link rel="stylesheet" href="style.css">
+<script src="runner.js" defer></script>
+</head><body>
+<header><strong>Binary Runner</strong><span class="version">1.0.8</span></header>
+<main>
+ <label for="choice">Binary</label>
+ <button type="button" id="choice" aria-label="Binary to stage" disabled>Loading...</button>
+ <div class="meta" id="detail">Select a binary.</div>
+ <div class="status" id="status" role="status" aria-live="polite">Loading...</div>
+ <section><h2>Recent logs</h2><pre id="log" aria-label="Recent logs" role="log">Ready.</pre></section>
+ <div class="actions">
+  <button type="button" id="stage" disabled>Stage binary</button>
+  <button type="button" id="restore">Restore stock updater</button>
+  <button type="button" id="inspect">Check status</button>
+  <button type="button" id="debug">Install debug XPI</button>
+  <button type="button" id="refresh-logs">Read logs</button>
+ </div>
+</main>
+<footer><span id="soft-left">Binary</span><strong>OK</strong><span id="soft-right">Logs</span></footer>
+</body></html>
