@@ -42,13 +42,13 @@
       "sha256": "7892baf73d3ed111a0c9f8cd4c48385d6979b3f009d5a8d0595bdb25b37f00c2"
     },
     {
-      "folder": "JScalated-Store",
-      "name": "JScalated Store",
-      "version": "1.2.4",
+      "folder": "OStore",
+      "name": "OStore",
+      "version": "1.2.8",
       "category": "utilities",
-      "description": "Browse and install JScalated KaiOS 3 apps.",
-      "package_url": "https://github.com/Garbagebuild/JScalated-Store/releases/download/jscalated-apps-1/JScalated-Store-1.2.4.zip",
-      "sha256": "a31d755c0e8c65f2ed4d8d27acd650946960e4774a49f9a5590014c53556cbb1"
+      "description": "Orange app store for kaios 3.1",
+      "package_url": "https://github.com/Garbagebuild/JScalated-Store/releases/download/jscalated-apps-1/OStore-1.2.8.zip",
+      "sha256": "a913c3581294af4eea108701f2bba767b52310b05f9c228bacf770ddc93400ee"
     },
     {
       "folder": "Luanti",

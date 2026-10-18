@@ -16,7 +16,7 @@ a{color:#7dd3fc}.warn{color:#fca5a5}
 <body>
 <main>
   <h1>Install OStore</h1>
-  <p>OStore 1.2.6 is hosted on this GitHub Pages site for KaiOS 3.</p>
+  <p>OStore 1.2.8 is hosted on this GitHub Pages site for KaiOS 3.</p>
   <section class="panel">
     <h2>On your phone</h2>
     <p>Open this page in the phone browser and select the button below. It stages the installer and opens the System page.</p>
@@ -40,7 +40,7 @@ a{color:#7dd3fc}.warn{color:#fca5a5}
   var status = document.getElementById("status");
   function get(path, done) {
     var request = new XMLHttpRequest();
-    request.open("GET", new URL(path, location.href).href + "?v=1.2.6", true);
+    request.open("GET", new URL(path, location.href).href + "?v=1.2.8", true);
     request.onload = function () {
       if (request.status < 200 || request.status >= 300 || !request.responseText) {
         done(new Error("Could not load " + path + ": HTTP " + request.status));
