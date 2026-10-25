@@ -1,0 +1,17 @@
+{
+  "name": "Survivalcraft",
+  "version": "0.1.0",
+  "package_path": "https://github.com/Garbagebuild/JScalated-Store/releases/download/jscalated-apps-1/Survivalcraft-0.1.0-store.zip",
+  "packaged_size": 3877500,
+  "size": 3877500,
+  "type": "web",
+  "b2g_features": {
+    "version": "0.1.0",
+    "cursor": false,
+    "developer": {
+      "name": "Personal port (Survivalcraft by Igor Kalicinski)"
+    },
+    "core": false,
+    "origin": "survivalcraft-kaios"
+  }
+}

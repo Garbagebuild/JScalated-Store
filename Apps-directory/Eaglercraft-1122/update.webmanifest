@@ -1,0 +1,17 @@
+{
+  "name": "Eaglercraft 1.12.2",
+  "version": "2.1.0",
+  "package_path": "https://github.com/Garbagebuild/JScalated-Store/releases/download/jscalated-apps-1/Eaglercraft-1.12.2-2.1.0-store.zip",
+  "packaged_size": 97286696,
+  "size": 97286696,
+  "type": "web",
+  "b2g_features": {
+    "version": "2.1.0",
+    "cursor": false,
+    "developer": {
+      "name": "Passion Project"
+    },
+    "core": false,
+    "origin": "eaglercraft-1122-kaios"
+  }
+}
