@@ -1,0 +1,42 @@
+{
+  "name": "FlipNav",
+  "short_name": "FlipNav",
+  "description": "Bike turn-by-turn navigation for KaiOS feature phones.",
+  "start_url": "/index.html",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#000000",
+  "theme_color": "#000000",
+  "icons": [
+    {
+      "src": "icons/icon-56.png",
+      "sizes": "56x56",
+      "type": "image/png"
+    },
+    {
+      "src": "icons/icon-112.png",
+      "sizes": "112x112",
+      "type": "image/png"
+    },
+    {
+      "src": "icons/icon-128.png",
+      "sizes": "128x128",
+      "type": "image/png"
+    }
+  ],
+  "b2g_features": {
+    "version": "1.0.0",
+    "description": "Bike turn-by-turn navigation for KaiOS feature phones.",
+    "type": "web",
+    "permissions": {
+      "geolocation": {}
+    },
+    "developer": {
+      "name": "alexc2684",
+      "url": "https://github.com/alexc2684/flip-maps"
+    },
+    "origin": "flipnav"
+  },
+  "id": "flipnav",
+  "version": "1.0.0"
+}
