@@ -130,6 +130,51 @@
       "description": "Wikipedia search and reading for KaiOS 3, built from the Wikimedia MIT-licensed app and gogogoghost port.",
       "package_url": "https://github.com/Garbagebuild/JScalated-Store/releases/download/jscalated-apps-1/Wikipedia-0.0.2.zip",
       "sha256": "0257f00c2a0dbb54b99cc8389134e6dd90a62c0c6269664c475a0655386f99d0"
+    },
+    {
+      "folder": "Kai-Sideload",
+      "name": "Sideload",
+      "version": "3.0.0",
+      "category": "utilities",
+      "description": "Scan a QR code to install a KaiOS app package hosted by a computer.",
+      "package_url": "https://github.com/Garbagebuild/JScalated-Store/releases/download/jscalated-apps-1/Kai-Sideload-3.0.0.zip",
+      "sha256": "d56ddec3cb4cf8d6819c90f6001cb7f160dff1cca72ac08fadd7a47193d32e14"
+    },
+    {
+      "folder": "Expense-Tracker",
+      "name": "Expense Tracker",
+      "version": "3.0.1",
+      "category": "utilities",
+      "description": "Track expenses and manage a personal budget.",
+      "package_url": "https://github.com/Garbagebuild/JScalated-Store/releases/download/jscalated-apps-1/Expense-Tracker-3.0.1.zip",
+      "sha256": "4536240c384876c940d632344955b8db0586915afeda460256b3334183af072b"
+    },
+    {
+      "folder": "K-Music",
+      "name": "K-Music",
+      "version": "3.1.1",
+      "category": "utilities",
+      "description": "Play local music, manage playlists, and use an equalizer and MP3 trimmer.",
+      "package_url": "https://github.com/Garbagebuild/JScalated-Store/releases/download/jscalated-apps-1/K-Music-3.1.1.zip",
+      "sha256": "3e7123c1b92512a790b4bee41e43b63a9bdbea88249e39a398dd68c490a315f8"
+    },
+    {
+      "folder": "Frogr",
+      "name": "Frogr",
+      "version": "1.0.1",
+      "category": "games",
+      "description": "A KaiOS keypad adaptation of the classic Frogger arcade game.",
+      "package_url": "https://github.com/Garbagebuild/JScalated-Store/releases/download/jscalated-apps-1/Frogr-1.0.1.zip",
+      "sha256": "295b308f43ff8bbe07e6bc9343faddf5b8d72fd9c59022286ef3e3f9f45f350c"
+    },
+    {
+      "folder": "Pak-Man",
+      "name": "Pak-Man",
+      "version": "1.0.5",
+      "category": "games",
+      "description": "A KaiOS keypad adaptation of the classic Pac-Man arcade game.",
+      "package_url": "https://github.com/Garbagebuild/JScalated-Store/releases/download/jscalated-apps-1/Pak-Man-1.0.5.zip",
+      "sha256": "6419d232928957c0ba5ad59ccabf53676ddb09989cec919a335686bd36f33306"
     }
   ]
 }
