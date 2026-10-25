@@ -1,0 +1,21 @@
+{
+  "name": "Pak-Man",
+  "version": "1.0.5",
+  "package_path": "https://github.com/Garbagebuild/JScalated-Store/releases/download/jscalated-apps-1/Pak-Man-1.0.5.zip",
+  "packaged_size": 754788,
+  "size": 754788,
+  "type": "privileged",
+  "b2g_features": {
+    "version": "1.0.5",
+    "type": "privileged",
+    "developer": {
+      "name": "Last Byte LLC",
+      "url": "https://github.com/Tombarr/pacman-kaios"
+    },
+    "permissions": {
+      "audio-channel-normal": {},
+      "audio-channel-content": {}
+    },
+    "origin": "pakman"
+  }
+}

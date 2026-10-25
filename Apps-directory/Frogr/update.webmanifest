@@ -1,0 +1,23 @@
+{
+  "name": "Frogr",
+  "version": "1.0.1",
+  "package_path": "https://github.com/Garbagebuild/JScalated-Store/releases/download/jscalated-apps-1/Frogr-1.0.1.zip",
+  "packaged_size": 208348,
+  "size": 208348,
+  "type": "privileged",
+  "b2g_features": {
+    "version": "1.0.1",
+    "type": "privileged",
+    "origin": "frogr",
+    "developer": {
+      "name": "Last Byte LLC",
+      "url": "https://github.com/Tombarr/kaios-frogger"
+    },
+    "permissions": {
+      "audio-channel-normal": {},
+      "audio-channel-content": {},
+      "mobiledata": {},
+      "wifidata": {}
+    }
+  }
+}

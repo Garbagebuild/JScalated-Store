@@ -1,0 +1,22 @@
+{
+  "name": "Sideload",
+  "version": "3.0.0",
+  "package_path": "https://github.com/Garbagebuild/JScalated-Store/releases/download/jscalated-apps-1/Kai-Sideload-3.0.0.zip",
+  "packaged_size": 75854,
+  "size": 75854,
+  "type": "web",
+  "b2g_features": {
+    "version": "3.0.0",
+    "type": "web",
+    "core": true,
+    "developer": {
+      "name": "Samenal",
+      "url": "https://github.com/Samenal-sys/kai-sideload"
+    },
+    "permissions": {
+      "video-capture": {},
+      "webapps-manage": {}
+    },
+    "origin": "sideloadqr"
+  }
+}
