@@ -175,6 +175,15 @@
       "description": "By Tombarr (Last Byte LLC). A KaiOS keypad adaptation of the classic Pac-Man arcade game.",
       "package_url": "https://github.com/Garbagebuild/JScalated-Store/releases/download/jscalated-apps-1/Pak-Man-1.0.5.zip",
       "sha256": "6419d232928957c0ba5ad59ccabf53676ddb09989cec919a335686bd36f33306"
+    },
+    {
+      "folder": "FlipNav",
+      "name": "FlipNav",
+      "version": "1.0.0",
+      "category": "utilities",
+      "description": "By alexc2684. Bike turn-by-turn navigation for KaiOS feature phones.",
+      "package_url": "https://github.com/Garbagebuild/JScalated-Store/releases/download/jscalated-apps-1/FlipNav-1.0.0.zip",
+      "sha256": "8adccc50464e179b71ea5670ad20dfd8d4ecfc5938441d9398f0b49b7b24933b"
     }
   ]
 }
