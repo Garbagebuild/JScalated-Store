@@ -33,6 +33,15 @@
       "sha256": "c32617c462d03db3148bb10b7a5e1c3c4126943c754c1e9484fd5744d94d6a9f"
     },
     {
+      "folder": "Eaglercraft-1122",
+      "name": "Eaglercraft 1.12.2",
+      "version": "2.1.0",
+      "category": "games",
+      "description": "Eaglercraft 1.12.2 offline for KaiOS 4.0: landscape, keypad controls, multi-threaded world server, low-power settings. 26.2 (experimental, WebAssembly) can be chosen with # on the start screen.",
+      "package_url": "https://github.com/Garbagebuild/JScalated-Store/releases/download/jscalated-apps-1/Eaglercraft-1.12.2-2.1.0-store.zip",
+      "sha256": "c6c87b65ae16eaf3f6bce9373c8e42d33d332c89fc60dd25ef63bd130cfa1acd"
+    },
+    {
       "folder": "Binary-Runner",
       "name": "Binary Runner",
       "version": "1.0.8",
@@ -103,6 +112,15 @@
       "description": "Runs a Scratch project offline on KaiOS with the TurboWarp engine; keypad-driven mouse.",
       "package_url": "https://github.com/Garbagebuild/JScalated-Store/releases/download/jscalated-apps-1/Super-Scratch-Smash-0.6.0.zip",
       "sha256": "d22ef6ce3b7a172b1da89177f5b16a4104c0fefcb424caee7470bb1cd02a80db"
+    },
+    {
+      "folder": "Survivalcraft",
+      "name": "Survivalcraft",
+      "version": "0.1.0",
+      "category": "games",
+      "description": "Survivalcraft 2.2 rewritten in JavaScript and WebGL 1 for KaiOS: original terrain, blocks, crafting, furnaces, day and night, keypad controls. Personal port.",
+      "package_url": "https://github.com/Garbagebuild/JScalated-Store/releases/download/jscalated-apps-1/Survivalcraft-0.1.0-store.zip",
+      "sha256": "616a7695db98e799acf3058bcc6f968d1baa92eaeb847966cffd1b5f3de8da84"
     },
     {
       "folder": "Wikipedia",
