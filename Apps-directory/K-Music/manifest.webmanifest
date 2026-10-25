@@ -65,7 +65,7 @@
         "description": "An audio player for KaiOS with playlist manager + Equalizer + MP3 Cutter/Trimmer"
       }
     },
-    "origin": "K-Music"
+    "origin": "k-music"
   },
   "version": "3.1.1"
 }

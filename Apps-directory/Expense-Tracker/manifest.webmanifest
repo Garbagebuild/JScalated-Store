@@ -44,7 +44,7 @@
         "description": "Expense Tracker is personal finance manager, built to help you save money, plan for the future, and see all your finances in one place"
       }
     },
-    "origin": "Expense Tracker"
+    "origin": "expense-tracker"
   },
   "version": "3.0.1"
 }

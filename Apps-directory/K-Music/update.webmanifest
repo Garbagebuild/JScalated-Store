@@ -1,9 +1,9 @@
 {
   "name": "K-Music",
   "version": "3.1.1",
-  "package_path": "https://github.com/Garbagebuild/JScalated-Store/releases/download/jscalated-apps-1/K-Music-3.1.1.zip",
-  "packaged_size": 149836,
-  "size": 149836,
+  "package_path": "https://github.com/Garbagebuild/JScalated-Store/releases/download/jscalated-apps-1/K-Music-3.1.1-r2.zip",
+  "packaged_size": 149837,
+  "size": 149837,
   "type": "privileged",
   "b2g_features": {
     "version": "3.1.1",
@@ -31,6 +31,6 @@
       },
       "external-api": {}
     },
-    "origin": "K-Music"
+    "origin": "k-music"
   }
 }

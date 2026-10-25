@@ -146,8 +146,8 @@
       "version": "3.0.1",
       "category": "utilities",
       "description": "Track expenses and manage a personal budget.",
-      "package_url": "https://github.com/Garbagebuild/JScalated-Store/releases/download/jscalated-apps-1/Expense-Tracker-3.0.1.zip",
-      "sha256": "4536240c384876c940d632344955b8db0586915afeda460256b3334183af072b"
+      "package_url": "https://github.com/Garbagebuild/JScalated-Store/releases/download/jscalated-apps-1/Expense-Tracker-3.0.1-r2.zip",
+      "sha256": "ff20ba917b07154db1bb81042bae876aa924427dbde1653e5439b7b1726316be"
     },
     {
       "folder": "K-Music",
@@ -155,8 +155,8 @@
       "version": "3.1.1",
       "category": "utilities",
       "description": "Play local music, manage playlists, and use an equalizer and MP3 trimmer.",
-      "package_url": "https://github.com/Garbagebuild/JScalated-Store/releases/download/jscalated-apps-1/K-Music-3.1.1.zip",
-      "sha256": "3e7123c1b92512a790b4bee41e43b63a9bdbea88249e39a398dd68c490a315f8"
+      "package_url": "https://github.com/Garbagebuild/JScalated-Store/releases/download/jscalated-apps-1/K-Music-3.1.1-r2.zip",
+      "sha256": "d1378714b4c2bc022218236c0dcc3adb0372b70c975ef60a4264763ef69d7a66"
     },
     {
       "folder": "Frogr",

@@ -1,7 +1,7 @@
 {
   "name": "Expense Tracker",
   "version": "3.0.1",
-  "package_path": "https://github.com/Garbagebuild/JScalated-Store/releases/download/jscalated-apps-1/Expense-Tracker-3.0.1.zip",
+  "package_path": "https://github.com/Garbagebuild/JScalated-Store/releases/download/jscalated-apps-1/Expense-Tracker-3.0.1-r2.zip",
   "packaged_size": 225103,
   "size": 225103,
   "type": "web",
@@ -14,6 +14,6 @@
       "url": "https://github.com/arma7x/expense-tracker"
     },
     "permissions": {},
-    "origin": "Expense Tracker"
+    "origin": "expense-tracker"
   }
 }
