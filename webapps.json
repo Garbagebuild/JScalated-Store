@@ -136,7 +136,7 @@
       "name": "Sideload",
       "version": "3.0.0",
       "category": "utilities",
-      "description": "Scan a QR code to install a KaiOS app package hosted by a computer.",
+      "description": "By Samenal. Scan a QR code to install a KaiOS app package hosted by a computer.",
       "package_url": "https://github.com/Garbagebuild/JScalated-Store/releases/download/jscalated-apps-1/Kai-Sideload-3.0.0.zip",
       "sha256": "d56ddec3cb4cf8d6819c90f6001cb7f160dff1cca72ac08fadd7a47193d32e14"
     },
@@ -145,7 +145,7 @@
       "name": "Expense Tracker",
       "version": "3.0.1",
       "category": "utilities",
-      "description": "Track expenses and manage a personal budget.",
+      "description": "By arma7x. Track expenses and manage a personal budget.",
       "package_url": "https://github.com/Garbagebuild/JScalated-Store/releases/download/jscalated-apps-1/Expense-Tracker-3.0.1-r2.zip",
       "sha256": "ff20ba917b07154db1bb81042bae876aa924427dbde1653e5439b7b1726316be"
     },
@@ -154,7 +154,7 @@
       "name": "K-Music",
       "version": "3.1.1",
       "category": "utilities",
-      "description": "Play local music, manage playlists, and use an equalizer and MP3 trimmer.",
+      "description": "By arma7x. Play local music, manage playlists, and use an equalizer and MP3 trimmer.",
       "package_url": "https://github.com/Garbagebuild/JScalated-Store/releases/download/jscalated-apps-1/K-Music-3.1.1-r2.zip",
       "sha256": "d1378714b4c2bc022218236c0dcc3adb0372b70c975ef60a4264763ef69d7a66"
     },
@@ -163,7 +163,7 @@
       "name": "Frogr",
       "version": "1.0.1",
       "category": "games",
-      "description": "A KaiOS keypad adaptation of the classic Frogger arcade game.",
+      "description": "By Tombarr (Last Byte LLC). A KaiOS keypad adaptation of the classic Frogger arcade game.",
       "package_url": "https://github.com/Garbagebuild/JScalated-Store/releases/download/jscalated-apps-1/Frogr-1.0.1.zip",
       "sha256": "295b308f43ff8bbe07e6bc9343faddf5b8d72fd9c59022286ef3e3f9f45f350c"
     },
@@ -172,7 +172,7 @@
       "name": "Pak-Man",
       "version": "1.0.5",
       "category": "games",
-      "description": "A KaiOS keypad adaptation of the classic Pac-Man arcade game.",
+      "description": "By Tombarr (Last Byte LLC). A KaiOS keypad adaptation of the classic Pac-Man arcade game.",
       "package_url": "https://github.com/Garbagebuild/JScalated-Store/releases/download/jscalated-apps-1/Pak-Man-1.0.5.zip",
       "sha256": "6419d232928957c0ba5ad59ccabf53676ddb09989cec919a335686bd36f33306"
     }
