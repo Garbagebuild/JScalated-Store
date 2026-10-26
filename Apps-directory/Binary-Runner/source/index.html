@@ -6,10 +6,13 @@
 <link rel="manifest" href="manifest.webmanifest"><link rel="stylesheet" href="style.css">
 <script src="runner.js" defer></script>
 </head><body>
-<header><strong>Binary Runner</strong><span class="version">1.0.8</span></header>
+<header><strong>Binary Runner</strong><span class="version">1.0.9</span></header>
 <main>
- <label for="choice">Binary</label>
- <button type="button" id="choice" aria-label="Binary to stage" disabled>Loading...</button>
+ <label for="open-choice">Binary</label>
+ <button type="button" id="open-choice" disabled>Select binary</button>
+ <select id="choice" aria-label="Bundled binary" aria-describedby="detail" tabindex="-1" hidden disabled><option value="">Loading binaries...</option></select>
+ <button type="button" id="local">Load local binary</button>
+ <input type="file" id="local-file" class="file-input" tabindex="-1" aria-label="Choose a local binary">
  <div class="meta" id="detail">Select a binary.</div>
  <div class="status" id="status" role="status" aria-live="polite">Loading...</div>
  <section><h2>Recent logs</h2><pre id="log" aria-label="Recent logs" role="log">Ready.</pre></section>

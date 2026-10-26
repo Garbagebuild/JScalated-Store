@@ -1,10 +1,10 @@
 [
   {
-    "name": "ghostlock_armv7",
+    "name": "Cingular_Flex_2",
     "kind": "binary",
-    "path": "payloads/binaries/ghostlock_armv7",
-    "size": 139508,
-    "sha256": "8d18086b8cdcdc97e1f89a752d43cc49f49606525bf50d552f976728c1288910"
+    "path": "payloads/binaries/Cingular_Flex_2",
+    "size": 139460,
+    "sha256": "f32c949d1454c757dc6b5038708a735a69b49684c9a50d2500c63b1ce5f6d4ff"
   },
   {
     "name": "ghostlock_nokia2760",
@@ -12,5 +12,12 @@
     "path": "payloads/binaries/ghostlock_nokia2760",
     "size": 142964,
     "sha256": "53c4fc54b81a5e6c145ada21515d9714a991cf200af6b1d0e62a8f6744597168"
+  },
+  {
+    "name": "TCL_Flip_3",
+    "kind": "binary",
+    "path": "payloads/binaries/TCL_Flip_3",
+    "size": 141116,
+    "sha256": "45527f57249ae7c77ae64ead202dedd44b5d5cacc2af9ff815f99b72f95750bb"
   }
 ]

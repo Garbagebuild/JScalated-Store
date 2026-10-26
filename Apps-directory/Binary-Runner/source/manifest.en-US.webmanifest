@@ -3,5 +3,5 @@
   "name": "Binary Runner",
   "short_name": "BinaryRunner",
   "description": "Stage a GhostLock binary, inspect results, and restore the stock updater.",
-  "version": "1.0.8"
+  "version": "1.0.9"
 }

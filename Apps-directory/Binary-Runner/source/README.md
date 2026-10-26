@@ -1,16 +1,25 @@
-# Binary Runner 1.0.8
+# Binary Runner 1.0.9
 
-Binary Runner offers the bundled ARMv7 and Nokia 2760 GhostLock binaries on
-KaiOS 3. It keeps keypad navigation: Up/Down moves focus, Left/Right changes
-the selected binary, the center key activates the focused control, the left
-softkey returns to the binary choice, and the right softkey opens logs. The
-binary chooser is a button so scrolling cannot open a native select popup.
+Binary Runner offers the bundled Cingular Flex 2, Nokia 2760, and TCL Flip 3 GhostLock binaries on
+KaiOS 3. Press **Select binary** to open the native bundled selector. The
+selector is hidden while navigating the other controls; older Gecko builds
+may need a second center-key press after it appears. Back closes the platform
+popup; press Back again if the selector remains visible. Up/Down moves focus
+through the page, the left softkey returns to **Select binary**, and the
+right softkey opens logs.
+**Load local binary** opens the device's file picker for a file in Downloads or
+Files. Selection only reads the file; **Stage binary** performs staging.
 
 ## Stage a binary
 
-1. Select a binary and choose **Stage binary**. The app checks the bundled
-   binary's size, SHA-256, and ARM ELF header, then writes a one-time request
+1. Select a bundled binary or load a local file, then choose **Stage binary**.
+   The app checks its size, SHA-256, and 32-bit ARM ELF header. Bundled entries
+   must also match the packaged catalog. A local file is read again before
+   staging and the installer independently checks its request, size, hash,
+   and ELF header. The app then writes a one-time request
    for its separate installer XPI. It does not replace the JScalated ADB XPI.
+   Local files are not matched to a specific phone or kernel; select one that
+   was built for the device.
 2. Reboot manually once. The installer stops the updater-daemon service using
    its service name, removes both the installed file and init marker, starts
    the stock wrapper, and verifies a fresh stock updater against the system copy.
@@ -32,15 +41,29 @@ socket. GhostLock's root shell, when the device-specific exploit succeeds, is
 separate and listens on loopback port 5557.
 
 Samuel reported a root prompt from port 5557 after manually restoring a fresh
-stock updater on the Cingular Flex 2, copying ghostlock_armv7 into the
+stock updater on the Cingular Flex 2, copying the earlier ghostlock_armv7 into the
 existing updater inode, preserving its system_data_file label, setting 0755,
-and rebooting. That is live evidence for the ARMv7 binary on that phone. The
-1.0.8 app's new automated sequence and the Nokia 2760 binary still need their
-own handset checks.
+and rebooting. The 1.0.9 Cingular_Flex_2 binary retains only its exact
+`4.9.277-perf+-ab1735940312` offset row; all entry points reject older
+kernels. This rebuilt binary and the automated staging sequence still need a
+handset check.
 
-Build with python package_app.py. python verify_package.py checks ZIP
-integrity, nested XPI, manifests, and payload hashes. The available standalone
-Python signer adds META-INF from an embedded reference and is a **signature
+The TCL_Flip_3 port uses offsets recovered from the supplied `tclboot.img`
+(SHA-256 `3ce509844c950c479cbcecd68cfa802a045e91e6573a278241239a385bc70489`).
+It requires a recognized TCL Flip 3 product model, exact `uname -r`
+`4.9.277-perf+`, and the boot image's `/proc/version` build string before
+running any mode. Its task and credential offsets and futex/select stack
+layout were checked against the recovered ARM image. The existing updater
+launch and api-daemon paths are retained. This is static compatibility
+evidence; the TCL binary, Nokia binary, and their staging flows still need
+tests on their respective phones. Other 4.9.277 builds require their own
+offset and layout checks.
+
+Build from this source directory with `python tools/package_app.py`. The
+published 1.0.9 ZIP passed checks of its ZIP integrity, nested XPI, manifests,
+and payload hashes. Picker and local-staging mock checks passed in the
+development project. The available standalone Python signer adds META-INF
+from an embedded reference and is a **signature
 test fixture**: its CMS signature is copied, not recalculated with a private
 key. It is not an authentic cryptographic signature; handset acceptance must
 be checked separately.

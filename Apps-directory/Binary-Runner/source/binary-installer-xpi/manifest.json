@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "Binary Runner Helper",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "applications": {
     "gecko": {
       "id": "jscalated-binary-runner@local"

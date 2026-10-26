@@ -16,6 +16,11 @@ function sha256(f){if(!regular(f))throw Error("Missing or unsafe binary: "+f.pat
  const input=Cc["@mozilla.org/network/file-input-stream;1"].createInstance(Ci.nsIFileInputStream);input.init(f,0x01,0,0);
  const hash=Cc["@mozilla.org/security/hash;1"].createInstance(Ci.nsICryptoHash);hash.init(hash.SHA256);
  try{hash.updateFromStream(input,f.fileSize);}finally{input.close();}const digest=hash.finish(false);let hex="";for(let i=0;i<digest.length;i++)hex+=(digest.charCodeAt(i)+256).toString(16).slice(1);return hex;}
+function armElf(f){if(!regular(f)||f.fileSize<20)return false;
+ const input=Cc["@mozilla.org/network/file-input-stream;1"].createInstance(Ci.nsIFileInputStream);input.init(f,0x01,0,0);
+ const binary=Cc["@mozilla.org/binaryinputstream;1"].createInstance(Ci.nsIBinaryInputStream);binary.setInputStream(input);
+ let b;try{b=binary.readByteArray(20);}finally{input.close();}
+ return b[0]===127&&b[1]===69&&b[2]===76&&b[3]===70&&b[4]===1&&b[5]===1&&b[18]===40&&b[19]===0;}
 function writeText(f,value,append){if(f.exists()&&(f.isSymlink()||!f.isFile()))throw Error("Unsafe output path");
  const stream=Cc["@mozilla.org/network/file-output-stream;1"].createInstance(Ci.nsIFileOutputStream);
  stream.init(f,0x02|0x08|(append?0x10:0x20),0o600,0);
@@ -273,7 +278,11 @@ function replaceFrom(source,expected,id,profile,stock){const target=fileAt(UPDAT
 }
 function validate(v){if(!v||!/^[a-f0-9]{16}$/.test(v.id))throw Error("Unrecognized staging request");
  if(v.action==="restore"&&Object.keys(v).length===2)return v;
- if(v.action!=="stage"||!ALLOWED[v.name]||ALLOWED[v.name].size!==v.size||ALLOWED[v.name].sha256!==v.sha256)
+ if(v.action==="stage"&&v.kind==="local"&&v.name==="Local_binary"&&
+    Object.keys(v).length===6&&Number.isSafeInteger(v.size)&&v.size>=20&&v.size<=MAX&&
+    /^[a-f0-9]{64}$/.test(v.sha256))return v;
+ if(v.action!=="stage"||v.kind!==undefined||!Object.prototype.hasOwnProperty.call(ALLOWED,v.name)||
+    ALLOWED[v.name].size!==v.size||ALLOWED[v.name].sha256!==v.sha256)
    throw Error("Unrecognized staging request");
  return v;}
 function perform(p,v){
@@ -282,7 +291,7 @@ function perform(p,v){
   return "Stock updater restored and running; hash, mode, and SELinux label verified.";
  }
  const src=fileAt(p.path+"/binary-runner-payload-"+v.id+".bin");
- if(!regular(src,v.size)||src.fileSize!==v.size||sha256(src)!==v.sha256)throw Error("Staged binary failed verification");
+ if(!regular(src,v.size)||src.fileSize!==v.size||sha256(src)!==v.sha256||!armElf(src))throw Error("Staged binary failed verification");
  const stock=restoreStock(p,v.id);
  createDir(BACKUPS);ensureFirstBackup(fileAt(STOCK_UPDATER));
  replaceFrom(src,v.sha256,v.id,p,stock);

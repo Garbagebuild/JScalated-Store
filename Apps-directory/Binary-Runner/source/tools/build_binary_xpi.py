@@ -11,7 +11,7 @@ ROOT = Path(__file__).resolve().parents[1]
 SOURCE = ROOT / "binary-installer-xpi"
 OUTPUT = ROOT / "payloads" / "binary-installer.xpi"
 METADATA = ROOT / "payloads" / "binary-installer-meta.json"
-EXPECTED_NAMES = {"ghostlock_armv7", "ghostlock_nokia2760"}
+EXPECTED_NAMES = {"Cingular_Flex_2", "ghostlock_nokia2760", "TCL_Flip_3"}
 
 
 def main() -> None:
@@ -19,7 +19,7 @@ def main() -> None:
     binaries = {entry["name"]: {"size": entry["size"], "sha256": entry["sha256"]}
                 for entry in catalog if entry["kind"] == "binary"}
     if set(binaries) != EXPECTED_NAMES:
-        raise ValueError("The installer allowlist must match the two bundled binaries")
+        raise ValueError("The installer allowlist must match the three bundled binaries")
 
     manifest = (SOURCE / "manifest.json").read_bytes()
     schema = (SOURCE / "schema.json").read_bytes()

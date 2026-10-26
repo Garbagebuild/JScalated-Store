@@ -4,9 +4,10 @@ var BASE = new URL("./", document.baseURI).href;
 var XPI_NAME = "jscalated-binary-runner@local.xpi";
 var REQ = "binary-runner-request.json";
 var MAX = 16 * 1024 * 1024;
-var state = { root:null, storage:null, catalog:[], selected:0, busy:false };
-var choice = document.getElementById("choice"), detail = document.getElementById("detail"),
+var state = { root:null, storage:null, catalog:[], selected:-1, local:null, busy:false };
+var openChoice = document.getElementById("open-choice"), choice = document.getElementById("choice"), detail = document.getElementById("detail"),
     status = document.getElementById("status"), log = document.getElementById("log"),
+    local = document.getElementById("local"), localFile = document.getElementById("local-file"),
     stage = document.getElementById("stage"), restore = document.getElementById("restore"),
     inspect = document.getElementById("inspect"), debug = document.getElementById("debug"),
     logs = document.getElementById("refresh-logs");
@@ -84,14 +85,24 @@ async function pending(p){var f=await entry(p,REQ);if(!f)return;var req=JSON.par
  var sf=await entry(p,"binary-runner-status-"+req.id+".json");if(!sf)throw new Error("Previous request pending; inspect before restaging");
  var v=JSON.parse(decode(await bytes(sf)));if(v.state!=="success"&&v.state!=="failed")throw new Error("Old request still active");
 }
-async function startStage(){var selected=state.catalog[state.selected];if(!selected)throw new Error("Choose binary");
- report("Checking payload...");var b=await get(selected.path);if(b.length!==selected.size||await hash(b)!==selected.sha256)throw new Error("Bundled binary failed verification");
- if(b[0]!==127||b[1]!==69||b[2]!==76||b[3]!==70||b[4]!==1||b[5]!==1||b[18]!==40||b[19]!==0)throw new Error("Not ARM 32-bit ELF");
+function armElf(b){return b.length>=20&&b[0]===127&&b[1]===69&&b[2]===76&&b[3]===70&&b[4]===1&&b[5]===1&&b[18]===40&&b[19]===0;}
+async function loadLocal(file){
+ var b=await bytes(file);if(!armElf(b))throw new Error("Local file is not a 32-bit ARM ELF binary");
+ state.local={file:file,name:file.name||"Local binary",size:b.length,sha256:await hash(b)};
+ state.selected=-1;choice.value="";choice.hidden=true;openChoice.hidden=false;showChoice();
+ report("Loaded local binary: "+state.local.name+" ("+b.length+" bytes). Review it, then Stage binary.");
+}
+async function startStage(){var selected=state.local||state.catalog[state.selected];if(!selected)throw new Error("Choose a bundled or local binary");
+ report("Checking payload...");var b=state.local?await bytes(selected.file):await get(selected.path);
+ if(b.length!==selected.size||await hash(b)!==selected.sha256)throw new Error("Selected binary changed or failed verification");
+ if(!armElf(b))throw new Error("Not a 32-bit ARM ELF binary");
  await preflight();var p=await timeout(profile(),"Profile inspection",25000);await pending(p);
  if(!confirm("Stage "+selected.name+"? On your next manual reboot, the helper will restore the stock updater, copy this binary into its executable file, and stop the service. A second manual reboot starts the binary."))return;
  var taskId=id();await save(p,"binary-runner-payload-"+taskId+".bin",b);
  report("Payload verified; placing separate XPI...");await installXpi(p);
- var task=encode(JSON.stringify({id:taskId,action:"stage",name:selected.name,size:b.length,sha256:selected.sha256})+"\n");
+ var request={id:taskId,action:"stage",name:state.local?"Local_binary":selected.name,size:b.length,sha256:selected.sha256};
+ if(state.local)request.kind="local";
+ var task=encode(JSON.stringify(request)+"\n");
  await replaceText(p,REQ,task,REQ+".backup-"+taskId);
  report("Request "+taskId+" saved. Reboot to restore stock and stage the binary; check status, then reboot again to start it.");
 }
@@ -121,24 +132,35 @@ async function statusCheck(){report("Checking updater...");var t=await timeout(p
  else report("No stage request found. Executable mode cannot be read through DeviceStorage.");
  await readEvents(true);
 }
-async function job(label,func){if(state.busy)return;state.busy=true;choice.disabled=stage.disabled=restore.disabled=inspect.disabled=debug.disabled=logs.disabled=true;report(label);
- try{await func();}catch(e){fail(e);}finally{state.busy=false;choice.disabled=stage.disabled=!state.catalog.length;restore.disabled=inspect.disabled=debug.disabled=logs.disabled=false;}}
-function showChoice(){var p=state.catalog[state.selected];choice.textContent=p?(p.name==="ghostlock_armv7"?"GhostLock ARMv7":"GhostLock Nokia 2760"):"No binary";detail.textContent=p?"Left/Right to choose · "+p.size+" bytes · SHA-256 "+p.sha256.slice(0,16)+"…":"No binary selected";}
-choice.onclick=function(){if(state.catalog.length){state.selected=(state.selected+1)%state.catalog.length;showChoice();}};
+async function job(label,func){if(state.busy)return;state.busy=true;openChoice.disabled=choice.disabled=local.disabled=stage.disabled=restore.disabled=inspect.disabled=debug.disabled=logs.disabled=true;report(label);
+ try{await func();}catch(e){fail(e);}finally{state.busy=false;openChoice.disabled=choice.disabled=!state.catalog.length;stage.disabled=!(state.local||state.selected>=0);local.disabled=restore.disabled=inspect.disabled=debug.disabled=logs.disabled=false;}}
+function showChoice(){var p=state.local||state.catalog[state.selected];var labels={Cingular_Flex_2:"Cingular Flex 2",ghostlock_nokia2760:"GhostLock Nokia 2760",TCL_Flip_3:"TCL Flip 3"};
+ detail.textContent=p?(state.local?"Local: "+p.name:"Bundled: "+(labels[p.name]||p.name))+" · "+p.size+" bytes · SHA-256 "+p.sha256.slice(0,16)+"…":"No binary selected";
+ stage.disabled=state.busy||!p;
+}
+function closeChoice(){choice.hidden=true;openChoice.hidden=false;openChoice.focus();}
+openChoice.onclick=function(){if(!state.busy&&state.catalog.length){openChoice.hidden=true;choice.hidden=false;choice.focus();
+ try{if(typeof choice.showPicker==="function")choice.showPicker();else choice.click();}catch(e){report("Press OK to open the binary list.");}
+}};
+choice.onchange=function(){if(!choice.value)return;state.local=null;state.selected=state.catalog.findIndex(function(x){return x.name===choice.value;});closeChoice();showChoice();};
+choice.onblur=function(){if(!choice.hidden){choice.hidden=true;openChoice.hidden=false;}};
+local.onclick=function(){if(!state.busy){localFile.value="";localFile.click();}};
+localFile.onchange=function(){var file=localFile.files&&localFile.files[0];if(file)job("Loading local binary...",function(){return loadLocal(file);});};
 stage.onclick=function(){job("Staging...",startStage);};restore.onclick=function(){job("Scheduling stock restore...",restoreStock);};inspect.onclick=function(){job("Checking status...",statusCheck);};debug.onclick=function(){job("Installing debug XPI...",installDebug);};logs.onclick=function(){job("Reading logs...",function(){return readEvents(false);});};
-var focusables=[choice,stage,restore,inspect,debug,logs];
+var focusables=[openChoice,local,stage,restore,inspect,debug,logs];
 function move(delta){var v=focusables.filter(function(e){return !e.disabled;}),n=v.indexOf(document.activeElement),next=n<0?(delta>0?0:v.length-1):(n+delta+v.length)%v.length;v[next].focus();}
 document.addEventListener("keydown",function(e){
  var k=e.key,a=document.activeElement;
- if(k==="SoftLeft"||k==="F1"){e.preventDefault();choice.focus();return;}
+ if(a===choice){if(k==="Backspace"||k==="Escape"){e.preventDefault();closeChoice();}return;}
+ if(k==="SoftLeft"||k==="F1"){e.preventDefault();openChoice.focus();return;}
  if(k==="SoftRight"||k==="F2"){e.preventDefault();if(!state.busy)logs.click();return;}
  if(k==="ArrowUp"||k==="ArrowDown"){e.preventDefault();move(k==="ArrowDown"?1:-1);return;}
- if((k==="ArrowLeft"||k==="ArrowRight")&&a===choice&&state.catalog.length){e.preventDefault();
-  state.selected=(state.selected+(k==="ArrowRight"?1:-1)+state.catalog.length)%state.catalog.length;showChoice();return;}
- if(k==="ArrowLeft"&&a!==choice){e.preventDefault();choice.focus();return;}
- if(k==="Enter"&&a===choice){e.preventDefault();if(!stage.disabled)stage.focus();return;}
+ if(k==="ArrowLeft"&&a!==openChoice){e.preventDefault();openChoice.focus();return;}
  if(k==="Enter"&&a&&a.tagName==="BUTTON"){e.preventDefault();if(!e.repeat&&!a.disabled)a.click();}
 });
-get("payloads/catalog.json").then(function(b){var entries=JSON.parse(decode(b));if(!Array.isArray(entries)||!entries.length||entries.some(function(x){return x.kind!=="binary"||x.path!=="payloads/binaries/"+x.name||!/^ghostlock_(armv7|nokia2760)$/.test(x.name)||!Number.isInteger(x.size)||!/^[0-9a-f]{64}$/.test(x.sha256);}))throw new Error("Invalid catalog");
- state.catalog=entries;choice.disabled=stage.disabled=false;showChoice();report("Ready. Choose a binary.");choice.focus();}).catch(fail);
+get("payloads/catalog.json").then(function(b){var entries=JSON.parse(decode(b));if(!Array.isArray(entries)||entries.length!==3||entries.some(function(x){return x.kind!=="binary"||x.path!=="payloads/binaries/"+x.name||!/^(Cingular_Flex_2|ghostlock_nokia2760|TCL_Flip_3)$/.test(x.name)||!Number.isInteger(x.size)||x.size<=0||x.size>MAX||!/^[0-9a-f]{64}$/.test(x.sha256);}))throw new Error("Invalid catalog");
+ state.catalog=entries;choice.textContent="";var placeholder=document.createElement("option");placeholder.value="";placeholder.textContent="Select binary";choice.appendChild(placeholder);
+ var labels={Cingular_Flex_2:"Cingular Flex 2",ghostlock_nokia2760:"GhostLock Nokia 2760",TCL_Flip_3:"TCL Flip 3"};
+ entries.forEach(function(item){var option=document.createElement("option");option.value=item.name;option.textContent=labels[item.name]||item.name;choice.appendChild(option);});
+ choice.value="";choice.disabled=openChoice.disabled=false;showChoice();report("Ready. Select a bundled binary or load a local file.");openChoice.focus();}).catch(fail);
 })();
