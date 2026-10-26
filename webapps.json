@@ -44,11 +44,11 @@
     {
       "folder": "Binary-Runner",
       "name": "Binary Runner",
-      "version": "1.0.9",
+      "version": "1.0.10",
       "category": "utilities",
       "description": "Stage a GhostLock binary, inspect results, and restore the stock updater.",
-      "package_url": "https://github.com/Garbagebuild/JScalated-Store/releases/download/jscalated-apps-1/Binary-Runner-1.0.9.zip",
-      "sha256": "c774bd431e1610fb633fc2b6a593ef063a4c366f844a77a935e7c3d28850021f"
+      "package_url": "https://github.com/Garbagebuild/JScalated-Store/releases/download/jscalated-apps-1/Binary-Runner-1.0.10.zip",
+      "sha256": "cdd0964da062c22511945881a054865c46084bff2c2ca26b4d437efa006c7a46"
     },
     {
       "folder": "OStore",

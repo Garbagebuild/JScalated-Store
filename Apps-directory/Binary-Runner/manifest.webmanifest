@@ -4,7 +4,7 @@
   "short_name": "BinaryRunner",
   "description": "Stage a GhostLock binary, inspect results, and restore the stock updater.",
   "id": "jscalated-binary-runner",
-  "version": "1.0.9",
+  "version": "1.0.10",
   "categories": [
     "utilities"
   ],
@@ -22,7 +22,7 @@
     }
   ],
   "b2g_features": {
-    "version": "1.0.9",
+    "version": "1.0.10",
     "type": "web",
     "core": true,
     "origin": "jscalated-binary-runner",

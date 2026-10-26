@@ -1,4 +1,4 @@
-# Binary Runner 1.0.9
+# Binary Runner 1.0.10
 
 Binary Runner offers the bundled Cingular Flex 2, Nokia 2760, and TCL Flip 3 GhostLock binaries on
 KaiOS 3. Press **Select binary** to open the native bundled selector. The
@@ -27,6 +27,8 @@ Files. Selection only reads the file; **Stage binary** performs staging.
    copies the chosen binary **into that existing inode** with cp -f, sets mode
    0755, and checks SHA-256, inode, SELinux label, and stopped service state.
    If staging fails, it attempts to restore and start the stock updater.
+   The system reference copy may be mode 0644; the recreated data-side updater
+   must be mode 0755 before it is replaced. The helper checks the latter.
 4. Choose **Check status**. After a successful result, reboot manually again
    to start the chosen binary. Neither the app nor the XPI reboots the phone.
 
@@ -60,7 +62,7 @@ tests on their respective phones. Other 4.9.277 builds require their own
 offset and layout checks.
 
 Build from this source directory with `python tools/package_app.py`. The
-published 1.0.9 ZIP passed checks of its ZIP integrity, nested XPI, manifests,
+published 1.0.10 ZIP passed checks of its ZIP integrity, nested XPI, manifests,
 and payload hashes. Picker and local-staging mock checks passed in the
 development project. The available standalone Python signer adds META-INF
 from an embedded reference and is a **signature

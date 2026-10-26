@@ -222,7 +222,7 @@ function ensureFirstBackup(stock){const d=createDir(BACKUPS+"/first-use-backup")
 function restoreStock(profile,id){
  const stock=fileAt(STOCK_UPDATER),target=fileAt(UPDATER),init=fileAt(UPDATER_DIR+"/init");
  if(!regular(stock))throw Error("System stock updater missing or unsafe");
- if((stock.permissions&0o111)!==0o111)throw Error("System stock updater is not executable");
+ // The read-only system copy can be mode 0644; the service recreates an executable data-side copy.
  const expected=sha256(stock);
  for(const f of [target,init])if(f.exists()&&(f.isSymlink()||!f.isFile()))
    throw Error("Unsafe updater path: "+f.path);
