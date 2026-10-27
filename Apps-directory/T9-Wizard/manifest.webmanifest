@@ -1,0 +1,35 @@
+{
+  "id": "t9-wizard",
+  "name": "T9 Wizard",
+  "description": "For thousands of years, the Ancient Order of T9 Wizards protected the kingdom using the forbidden magic of predictive typing. Then... the dictionaries fell. Now the Slime King has unleashed an endless horde of alphabet-hungry monsters, and only the greatest wizard alive can stop them. Battle through 5 perilous worlds, defeat colossal bosses, unleash devastating word combos, and channel the lost power of the legendary 9-Key Spellbook. Every correctly predicted word makes you stronger. Every typo brings the kingdom one step closer to destruction. Rise through the Global Seasonal Leaderboard and prove to the world that your thumbs are worthy of the title... THE ULTIMATE T9 WIZARD.",
+  "lang": "en-US",
+  "theme_color": "#111111",
+  "orientation": "natural",
+  "start_url": "/index.html",
+  "icons": [
+    {
+      "src": "/assets/icons/kaios_56.png",
+      "type": "image/png",
+      "sizes": "56x56"
+    },
+    {
+      "src": "/assets/icons/kaios_112.png",
+      "type": "image/png",
+      "sizes": "112x112"
+    }
+  ],
+  "b2g_features": {
+    "subtitle": "Learn T9 the fun way!",
+    "type": "web",
+    "origin": "t9wizard",
+    "permissions": {},
+    "version": "3.1.10",
+    "developer": {
+        "name": "elliscode",
+        "url": "http://www.elliscode.com"
+    },
+		"dependencies": {
+			"ads-sdk": "1.5.8"
+		}
+  }
+}
