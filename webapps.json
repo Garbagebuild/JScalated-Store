@@ -195,6 +195,16 @@
       "type": "pwa",
       "manifest_url": "https://next-caltrain-pwa.appspot.com/manifest.webmanifest",
       "source_url": "https://github.com/woodie/next-caltrain-pwa"
+    },
+    {
+      "folder": "T9-Wizard",
+      "name": "T9 Wizard",
+      "version": "3.1.10",
+      "category": "games",
+      "description": "By elliscode. A typing-action game for the T9 keypad: type the falling words before they reach you, survive 50 waves and 5 bosses, and climb the global leaderboard.",
+      "package_url": "https://github.com/Garbagebuild/JScalated-Store/releases/download/jscalated-apps-1/T9-Wizard-3.1.10.zip",
+      "sha256": "542aa014c565cafd69aff07a4f23a5ce32a04a7892c332e8077811b3fb74e8f1",
+      "update_url": "https://t9-wizard.elliscode.com/update.webmanifest"
     }
   ]
 }

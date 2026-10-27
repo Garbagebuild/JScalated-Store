@@ -1,0 +1,21 @@
+{
+  "name": "T9 Wizard",
+  "version": "3.1.10",
+  "package_path": "https://github.com/Garbagebuild/JScalated-Store/releases/download/jscalated-apps-1/T9-Wizard-3.1.10.zip",
+  "packaged_size": 113187,
+  "size": 113187,
+  "type": "web",
+  "b2g_features": {
+    "version": "3.1.10",
+    "type": "web",
+    "permissions": {},
+    "developer": {
+      "name": "elliscode",
+      "url": "http://www.elliscode.com"
+    },
+    "dependencies": {
+      "ads-sdk": "1.5.8"
+    },
+    "origin": "t9wizard"
+  }
+}
