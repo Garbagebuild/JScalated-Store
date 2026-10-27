@@ -53,11 +53,11 @@
     {
       "folder": "OStore",
       "name": "OStore",
-      "version": "1.2.8",
+      "version": "1.2.9",
       "category": "utilities",
       "description": "Orange app store for kaios 3.1",
-      "package_url": "https://github.com/Garbagebuild/JScalated-Store/releases/download/jscalated-apps-1/OStore-1.2.8.zip",
-      "sha256": "a913c3581294af4eea108701f2bba767b52310b05f9c228bacf770ddc93400ee"
+      "package_url": "https://github.com/Garbagebuild/JScalated-Store/releases/download/jscalated-apps-1/OStore-1.2.9.zip",
+      "sha256": "a72ee51799e6b220beefd4a3ca073409a92b60285788c2e42b120d97a8073d75"
     },
     {
       "folder": "Luanti",
@@ -184,6 +184,17 @@
       "description": "By alexc2684. Bike turn-by-turn navigation for KaiOS feature phones.",
       "package_url": "https://github.com/Garbagebuild/JScalated-Store/releases/download/jscalated-apps-1/FlipNav-1.0.0.zip",
       "sha256": "8adccc50464e179b71ea5670ad20dfd8d4ecfc5938441d9398f0b49b7b24933b"
+    },
+    {
+      "folder": "Next-Caltrain",
+      "id": "nextcaltrain",
+      "name": "Caltrain",
+      "version": "3.0.0",
+      "category": "utilities",
+      "description": "By John Woodell. A hosted Caltrain schedule and trip planner for KaiOS; schedule updates are served by the developer.",
+      "type": "pwa",
+      "manifest_url": "https://next-caltrain-pwa.appspot.com/manifest.webmanifest",
+      "source_url": "https://github.com/woodie/next-caltrain-pwa"
     }
   ]
 }

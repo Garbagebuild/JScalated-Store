@@ -1,9 +1,9 @@
 {
   "name": "OStore",
-  "version": "1.2.8",
-  "package_path": "https://github.com/Garbagebuild/JScalated-Store/releases/download/jscalated-apps-1/OStore-1.2.8.zip",
-  "packaged_size": 79615,
-  "size": 79615,
+  "version": "1.2.9",
+  "package_path": "https://github.com/Garbagebuild/JScalated-Store/releases/download/jscalated-apps-1/OStore-1.2.9.zip",
+  "packaged_size": 78204,
+  "size": 78204,
   "type": "web",
   "b2g_features": {
     "type": "web",
@@ -16,7 +16,7 @@
       "webapps-manage": {},
       "sideload": {}
     },
-    "version": "1.2.8",
+    "version": "1.2.9",
     "origin": "ostore"
   }
 }

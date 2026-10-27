@@ -1,50 +1,72 @@
 # JScalated Store sources and developer updates
 
-The Store starts with the JScalated GitHub Pages catalogue. **Add source** accepts
-an `http://` or `https://` directory URL, or the complete URL ending in
-`webapps.json`. For example, both `https://example.com/kaios/` and
-`https://example.com/kaios/webapps.json` identify the same source. The phone
-saves up to eight extra sources in the Store's local storage. The host must
-permit cross-origin requests for `webapps.json` and `update.webmanifest`.
+OStore reads the JScalated catalogue from this repository and the OStore API.
+The JScalated entries in `webapps.json` normally install through the matching
+`Apps-directory/<folder>/update.webmanifest` on GitHub Pages. The catalogue
+schema is `1`; each entry has a folder, name, version, category, description,
+release `package_url`, and SHA-256. The update manifest's `package_path` points
+to the same asset in the shared `jscalated-apps-1` GitHub Release.
 
-Each source follows this layout:
+## Developer-maintained updates for new apps
 
-```text
-webapps.json
-Apps-directory/
-  Example-App/
-    manifest.webmanifest
-    update.webmanifest
-    application.zip       # optional if package_url points to a release asset
-```
+An app developer can maintain a stable HTTPS `update.webmanifest` in their own
+repository. During onboarding, add its absolute URL as `update_url` in that
+app's `webapps.json` entry. OStore uses that URL for the initial AppsManager
+install, and KaiOS records it as the app's update URL. The developer can then
+publish new packages and update that one manifest without editing OStore or
+getting access to this repository's release assets. Existing apps without
+`update_url` continue using their current JScalated URL.
 
-The catalogue uses schema 1 with `categories` and `apps`, matching the
-JScalated `webapps.json` in this project. Each app entry needs `folder`, `name`,
-`version`, `category`, and `description`. `package_url` may point to an HTTPS
-release asset. When it is absent, the package is expected at the app folder's
-`application.zip` URL.
+For the first listing, submit a pull request containing the app's
+`manifest.webmanifest`, 56×56 icon, `SOURCE.md` with the upstream repository
+and distribution permission, `update.webmanifest`, and `webapps.json` entry.
+The initial package still goes to the shared `jscalated-apps-1` Release, and
+the local update manifest, `package_url`, and SHA-256 describe that initial
+asset. The developer's own update manifest must be live before the listing is
+published and should initially point to that same package. OStore only uses
+the developer URL for installation; the local copy preserves the initial
+release record.
 
-For a developer update:
+After onboarding, the developer's release steps are:
 
-1. Keep the app's source URL and `Apps-directory/<folder>/update.webmanifest`
-   path stable. KaiOS records that URL as the installed app's `updateURL`.
-2. Build a new package with the same app identity (`id` and origin), a higher
-   `b2g_features.version`, and the required permissions in its
-   `manifest.webmanifest`. Prepare or sign the package using a method the
-   target phone accepts.
-3. Upload the new package, preferably with an immutable versioned asset name.
-4. Change `update.webmanifest` to the new `version`, `package_path`, and exact
-   `packaged_size`; change its `b2g_features` to match the packaged manifest.
-5. Change the app's `version`, `package_url` (if used), and `sha256` in
-   `webapps.json`. Publish the package before the metadata so the advertised
-   package URL is live when users refresh.
+1. Build a new `application.zip` with the **same** manifest `id` and
+   `b2g_features.origin`, a higher version, and the required permissions.
+   Prepare the package using a method accepted by the target phone.
+2. Publish the ZIP as an immutable asset on their own GitHub Releases page.
+3. Update the stable `update.webmanifest` URL in their own repository. Set
+   `version` and `b2g_features.version` to the new version, `package_path`
+   to the exact release asset URL, and `packaged_size` to its byte length.
+   Keep the rest of `b2g_features` aligned with the ZIP's manifest.
+4. Confirm that the manifest and release asset are publicly downloadable.
+   OStore reads the developer manifest to show the current version; the
+   installed app's update check uses the same URL.
 
-The Store's **Check update** action calls `AppsManager.checkForUpdate` with the
-installed app's update URL, then `AppsManager.update` with its `manifestURL`.
-Changing an installed app's update URL to a different host requires a migration
-through its old URL; simply adding the same app to a new source can trigger a
-duplicate-install error. Removing a source only removes its listing from the
-Store. It does not uninstall its apps.
+The developer manifest must be served from a stable HTTPS URL without a query
+string or fragment. It must allow OStore to read it across origins, such as
+through GitHub Pages. A new release should use a new asset name or tag so
+cached ZIP bytes cannot be confused with an earlier release. The first release
+and the onboarding PR still need review and device testing.
+
+KaiOS retains the update URL used at install time. An app already installed
+from this repository's update URL will continue using it; changing its
+catalogue entry to a developer URL does not migrate that installed record.
+Use developer-maintained URLs for newly listed apps, or plan a separate
+migration for existing installs.
+
+## Hosted PWA listings
+
+A developer who already hosts a KaiOS app can provide a public HTTPS
+`manifest.webmanifest` instead of a ZIP. Its catalogue entry uses `type: "pwa"`,
+the manifest's exact `id`, `manifest_url`, and `source_url`. It has no
+`package_url`, SHA-256, `application.zip`, or local `update.webmanifest`.
+The folder holds a 56×56 icon and `SOURCE.md` with credit and permission.
+OStore loads the owner's manifest to show the current version and calls
+`AppsManager.installPwa` with its URL. The hosted app's content and schedule
+are maintained by its owner; no new Store package is needed for those changes.
+
+The manifest must permit cross-origin reads from OStore. Check it from the
+target device before claiming installation works there. A browser test or a
+separate `appscmd install-pwa` test does not prove the OStore AppsManager path.
 
 The packages prepared in this project pass the tested KaiOS package verifier,
 but their CMS signatures are not cryptographically valid. Phone acceptance and
@@ -52,7 +74,7 @@ individual app compatibility require device testing.
 
 ## OStore handoff
 
-The catalogue now lists OStore 1.2.8 in place of the older JScalated Store app.
+The catalogue now lists OStore 1.2.9 in place of the older JScalated Store app.
 The [GitHub Pages installer](https://garbagebuild.github.io/JScalated-Store/)
 stages the OStore AppsManager helper directly on the phone.
 Its update source is
